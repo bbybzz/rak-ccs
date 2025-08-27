@@ -3,29 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RakRunnin Card Shop - Ultimate Darknet Drops</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+  <title>RakRunnin Card Shop - Elite CCs, Fullz & Malware</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --neon-red: #ff0000;
-      --dark-red: #cc0000;
-      --gold: #ffd700;
-      --dark-bg: #0a0a0a;
-      --mid-bg: #1a1a1a;
-      --light-bg: #2a2a2a;
-    }
     body {
-      background: linear-gradient(135deg, var(--dark-bg), var(--mid-bg));
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
       color: #ffcccc;
       font-family: 'Roboto Mono', monospace;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
       scroll-behavior: smooth;
-      transition: filter 0.5s;
-    }
-    body.neon-theme {
-      filter: hue-rotate(30deg) brightness(1.1);
     }
     #captcha-screen {
       position: fixed;
@@ -39,47 +27,45 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      backdrop-filter: blur(15px);
-      animation: fadeIn 0.5s ease-in;
+      backdrop-filter: blur(10px);
     }
     #captcha-screen h2 {
-      color: var(--neon-red);
-      text-shadow: 0 0 15px var(--neon-red);
+      color: #ff0000;
+      text-shadow: 0 0 12px #ff0000;
       font-family: 'Orbitron', sans-serif;
-      font-size: 3.5em;
-      animation: pulse 1.5s infinite;
+      font-size: 3em;
+      animation: pulse 2s infinite;
     }
     #captcha-screen input {
       padding: 15px;
       margin: 20px 0;
-      border: 3px solid var(--neon-red);
-      border-radius: 10px;
-      background: var(--mid-bg);
+      border: 2px solid #ff0000;
+      border-radius: 8px;
+      background: #1a1a1a;
       color: #ffcccc;
-      font-size: 1.3em;
-      width: 250px;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      font-size: 1.2em;
+      width: 200px;
+      transition: border-color 0.3s;
     }
     #captcha-screen input:focus {
-      border-color: var(--dark-red);
-      box-shadow: 0 0 15px var(--neon-red);
+      border-color: #cc0000;
       outline: none;
     }
     #captcha-screen button {
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      background: linear-gradient(45deg, #ff0000, #cc0000);
       color: #fff;
-      padding: 15px 40px;
+      padding: 15px 30px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1.3em;
+      font-size: 1.2em;
       font-family: 'Orbitron', sans-serif;
       transition: transform 0.3s, box-shadow 0.3s;
       text-shadow: 0 0 5px #000;
     }
     #captcha-screen button:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--neon-red);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff0000;
     }
     #loading-screen {
       position: fixed;
@@ -93,41 +79,29 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: var(--neon-red);
+      color: #ff0000;
       font-family: 'Orbitron', sans-serif;
-      font-size: 3em;
-      text-shadow: 0 0 15px var(--neon-red);
+      font-size: 2.5em;
+      text-shadow: 0 0 12px #ff0000;
     }
     #loading-screen p {
       margin: 20px 0;
     }
     .stick-figure {
-      width: 300px;
-      height: 300px;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="20" r="12" fill="%23ff0000" filter="url(%23glow)"/><line x1="50" y1="32" x2="50" y2="65" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="40" x2="30" y2="50" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="40" x2="70" y2="50" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="65" x2="40" y2="85" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="65" x2="60" y2="85" stroke="%23ff0000" stroke-width="6"/><rect x="75" y="10" width="20" height="25" fill="%23ffd700" rx="5"/><text x="82.5" y="27" fill="%23ff0000" font-size="18">$</text><defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>') no-repeat center;
-      animation: chase 1.2s infinite ease-in-out;
+      width: 250px;
+      height: 250px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="20" r="12" fill="%23ff0000" filter="url(%23glow)"/><line x1="50" y1="32" x2="50" y2="65" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="40" x2="30" y2="50" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="40" x2="70" y2="50" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="65" x2="40" y2="85" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="65" x2="60" y2="85" stroke="%23ff0000" stroke-width="6"/><rect x="75" y="10" width="20" height="25" fill="%23ffd700" rx="5"/><text x="82.5" y="27" fill="%23ff0000" font-size="18">$</text><defs><filter id="glow"><feGaussianBlur stdDeviation="2.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>') no-repeat center;
+      animation: chase 1.5s infinite ease-in-out;
     }
     @keyframes chase {
-      0% { transform: translateX(0) rotate(0deg) scale(1); }
-      50% { transform: translateX(80px) rotate(15deg) scale(1.1); }
-      100% { transform: translateX(0) rotate(0deg) scale(1); }
+      0% { transform: translateX(0) rotate(0deg); }
+      50% { transform: translateX(60px) rotate(10deg); }
+      100% { transform: translateX(0) rotate(0deg); }
     }
     @keyframes pulse {
-      0% { text-shadow: 0 0 15px var(--neon-red); }
-      50% { text-shadow: 0 0 25px var(--neon-red); }
-      100% { text-shadow: 0 0 15px var(--neon-red); }
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(60px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(2px, -2px); }
-      60% { transform: translate(-1px, 1px); }
-      80% { transform: translate(1px, -1px); }
-      100% { transform: translate(0); }
+      0% { text-shadow: 0 0 12px #ff0000; }
+      50% { text-shadow: 0 0 20px #ff0000; }
+      100% { text-shadow: 0 0 12px #ff0000; }
     }
     .container {
       display: flex;
@@ -137,76 +111,60 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      font-size: 3em;
-      color: var(--neon-red);
+      font-size: 2.5em;
+      color: #ff0000;
       cursor: pointer;
       z-index: 100;
-      text-shadow: 0 0 15px var(--neon-red);
-      transition: transform 0.3s, text-shadow 0.3s;
+      text-shadow: 0 0 10px #ff0000;
+      transition: transform 0.3s;
     }
     .menu-icon:hover {
-      transform: rotate(180deg);
-      text-shadow: 0 0 20px var(--neon-red);
+      transform: rotate(90deg);
     }
     .sidebar {
-      width: 350px;
-      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
-      padding: 40px 20px;
+      width: 320px;
+      background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
+      padding: 30px;
       position: fixed;
       height: 100%;
       overflow-y: auto;
       scrollbar-width: thin;
-      scrollbar-color: var(--neon-red) var(--mid-bg);
-      box-shadow: 6px 0 20px rgba(255, 0, 0, 0.6);
+      scrollbar-color: #ff0000 #1a1a1a;
+      box-shadow: 5px 0 15px rgba(255, 0, 0, 0.5);
       transform: translateX(-100%);
-      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
       z-index: 99;
     }
     .sidebar.active {
       transform: translateX(0);
     }
     .sidebar h3 {
-      color: var(--neon-red);
+      color: #ff0000;
       font-family: 'Orbitron', sans-serif;
-      font-size: 2.5em;
+      font-size: 2em;
       margin: 20px 0;
-      text-shadow: 0 0 15px var(--neon-red);
-      animation: glitch 0.5s infinite;
+      text-shadow: 0 0 10px #ff0000;
+      animation: pulse 2s infinite;
     }
     .sidebar ul {
       list-style: none;
       padding: 0;
     }
     .sidebar li {
-      margin: 30px 0;
+      margin: 25px 0;
       color: #ffcccc;
-      font-size: 1.4em;
+      font-size: 1.3em;
       cursor: pointer;
-      transition: all 0.3s;
-      padding: 15px;
-      border-radius: 10px;
-      background: var(--light-bg);
-      position: relative;
-      overflow: hidden;
-    }
-    .sidebar li::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
-      transition: 0.5s;
-    }
-    .sidebar li:hover::before {
-      left: 100%;
+      transition: color 0.3s, transform 0.3s, background 0.3s;
+      padding: 12px;
+      border-radius: 8px;
+      background: #2a2a2a;
     }
     .sidebar li:hover {
-      color: var(--neon-red);
-      transform: translateX(20px);
+      color: #ff0000;
+      transform: translateX(15px);
       background: #3a3a3a;
-      box-shadow: 0 0 15px var(--neon-red);
+      box-shadow: 0 0 10px #ff0000;
     }
     .sidebar .sold-out {
       color: #666;
@@ -214,166 +172,137 @@
       background: none;
       box-shadow: none;
     }
-    .sidebar .sold-out::before {
-      display: none;
-    }
     .main-content {
       margin-left: 0;
-      padding: 50px;
+      padding: 40px;
       width: 100%;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%23ff0000" stroke-width="2" fill="none" opacity="0.15"/><path d="M20 80 L80 20" stroke="%23ff0000" stroke-width="2" opacity="0.1"/></svg>') repeat;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%23ff0000" stroke-width="2" fill="none" opacity="0.1"/></svg>') repeat;
     }
     .user-info {
       position: fixed;
       top: 20px;
-      left: 100px;
-      color: var(--neon-red);
+      left: 80px;
+      color: #ff0000;
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.5em;
-      text-shadow: 0 0 15px var(--neon-red);
+      font-size: 1.3em;
+      text-shadow: 0 0 10px #ff0000;
       z-index: 100;
-      background: var(--mid-bg);
-      padding: 15px 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px var(--neon-red);
-      animation: glitch 0.7s infinite;
+      background: #1a1a1a;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ff0000;
     }
     .account-section {
-      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
-      padding: 40px;
-      border-radius: 15px;
-      margin: 50px auto;
-      max-width: 900px;
+      background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
+      padding: 30px;
+      border-radius: 12px;
+      margin: 40px auto;
+      max-width: 800px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
       display: none;
-      animation: slideIn 0.6s ease-out;
+      animation: slideIn 0.5s ease-out;
     }
     .account-section input {
       padding: 15px;
       margin: 15px 0;
-      border: 3px solid var(--neon-red);
-      border-radius: 10px;
-      background: var(--light-bg);
+      border: 2px solid #ff0000;
+      border-radius: 8px;
+      background: #2a2a2a;
       color: #ffcccc;
-      font-size: 1.3em;
+      font-size: 1.2em;
       width: 100%;
-      max-width: 400px;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      max-width: 350px;
+      transition: border-color 0.3s;
     }
     .account-section input:focus {
-      border-color: var(--dark-red);
-      box-shadow: 0 0 15px var(--neon-red);
+      border-color: #cc0000;
       outline: none;
     }
     .account-section button {
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      background: linear-gradient(45deg, #ff0000, #cc0000);
       color: #fff;
-      padding: 15px 40px;
+      padding: 15px 30px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1.3em;
+      font-size: 1.2em;
       font-family: 'Orbitron', sans-serif;
       margin: 15px 10px;
       transition: transform 0.3s, box-shadow 0.3s;
       text-shadow: 0 0 5px #000;
     }
     .account-section button:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--neon-red);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff0000;
     }
     .header {
-      background: linear-gradient(to right, var(--mid-bg), var(--light-bg));
-      padding: 40px;
+      background: linear-gradient(to right, #1a1a1a, #2a2a2a);
+      padding: 30px;
       text-align: center;
-      box-shadow: 0 6px 20px rgba(255, 0, 0, 0.6);
-      border-radius: 15px;
-      margin-bottom: 50px;
-      position: relative;
-      overflow: hidden;
-    }
-    .header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 0, 0, 0.2), transparent);
-      animation: rotate 20s linear infinite;
-    }
-    .header > * {
-      position: relative;
-      z-index: 1;
+      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
+      border-radius: 12px;
+      margin-bottom: 40px;
     }
     .header h1 {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      font-size: 4em;
-      color: var(--neon-red);
-      text-shadow: 0 0 20px var(--neon-red);
-      animation: glitch 0.5s infinite;
+      font-size: 3.5em;
+      color: #ff0000;
+      text-shadow: 0 0 15px #ff0000;
+      animation: pulse 2s infinite;
     }
     .header p {
-      font-family: 'Inconsolata', monospace;
-      font-size: 2em;
+      font-size: 1.8em;
       margin: 20px 0;
-      color: var(--dark-red);
-      text-shadow: 0 0 10px var(--dark-red);
-    }
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      color: #cc0000;
+      text-shadow: 0 0 10px #cc0000;
     }
     .navbar {
-      background: linear-gradient(to right, var(--mid-bg), var(--light-bg));
+      background: linear-gradient(to right, #1a1a1a, #2a2a2a);
       padding: 20px;
       display: flex;
       justify-content: center;
-      gap: 35px;
+      gap: 30px;
       flex-wrap: wrap;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
-      border-radius: 15px;
-      margin: 30px 0;
-      position: relative;
-      z-index: 1;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      margin: 20px 0;
     }
     .navbar button {
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      background: linear-gradient(45deg, #ff0000, #cc0000);
       color: #fff;
       border: none;
-      padding: 15px 35px;
-      border-radius: 10px;
+      padding: 15px 30px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1.3em;
+      font-size: 1.2em;
       font-family: 'Orbitron', sans-serif;
       transition: transform 0.3s, box-shadow 0.3s;
       text-shadow: 0 0 5px #000;
     }
     .navbar button:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--neon-red);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff0000;
     }
     .search-bar {
-      margin: 40px auto;
-      max-width: 800px;
+      margin: 30px auto;
+      max-width: 700px;
       position: relative;
     }
     .search-bar input {
       width: 100%;
-      padding: 15px 60px 15px 20px;
-      border: 3px solid var(--neon-red);
-      border-radius: 10px;
-      background: var(--mid-bg);
+      padding: 15px 50px 15px 20px;
+      border: 2px solid #ff0000;
+      border-radius: 8px;
+      background: #1a1a1a;
       color: #ffcccc;
-      font-size: 1.3em;
+      font-size: 1.2em;
       box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5);
-      transition: border-color 0.3s, box-shadow 0.3s;
+      transition: border-color 0.3s;
     }
     .search-bar input:focus {
-      border-color: var(--dark-red);
-      box-shadow: 0 0 15px var(--neon-red);
+      border-color: #cc0000;
       outline: none;
     }
     .search-bar::after {
@@ -382,46 +311,47 @@
       right: 20px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--neon-red);
-      font-size: 1.8em;
-      text-shadow: 0 0 10px var(--neon-red);
+      color: #ff0000;
+      font-size: 1.5em;
     }
     .section {
-      margin: 50px 0;
+      margin: 40px 0;
       animation: slideIn 0.8s ease-out;
     }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     .section h2 {
-      color: var(--neon-red);
+      color: #ff0000;
       font-family: 'Orbitron', sans-serif;
-      font-size: 3em;
+      font-size: 2.5em;
       text-align: center;
-      text-shadow: 0 0 15px var(--neon-red);
-      margin-bottom: 40px;
-      animation: glitch 0.7s infinite;
+      text-shadow: 0 0 12px #ff0000;
+      margin-bottom: 30px;
     }
     .item-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 40px;
-      padding: 40px;
-      max-height: 1200px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      padding: 30px;
+      max-height: 1000px;
       overflow-y: auto;
       scrollbar-width: thin;
-      scrollbar-color: var(--neon-red) var(--mid-bg);
+      scrollbar-color: #ff0000 #1a1a1a;
     }
     .item {
-      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
-      padding: 40px;
-      border-radius: 15px;
-      transition: transform 0.4s, box-shadow 0.4s;
-      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
+      padding: 30px;
+      border-radius: 12px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
-      cursor: pointer;
     }
     .item:hover {
-      transform: translateY(-15px) rotate(2deg);
-      box-shadow: 0 20px 40px rgba(255, 0, 0, 0.8);
+      transform: translateY(-10px) rotate(1deg);
+      box-shadow: 0 15px 30px rgba(255, 0, 0, 0.7);
     }
     .item::before {
       content: '';
@@ -430,12 +360,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at top left, rgba(255, 0, 0, 0.3), transparent);
+      background: radial-gradient(circle at top left, rgba(255, 0, 0, 0.2), transparent);
       z-index: 0;
-      transition: opacity 0.3s;
-    }
-    .item:hover::before {
-      opacity: 0.5;
     }
     .item > * {
       position: relative;
@@ -443,140 +369,124 @@
     }
     .item img {
       width: 100%;
-      max-width: 350px;
+      max-width: 300px;
       height: auto;
-      border-radius: 10px;
+      border-radius: 8px;
       margin: 0 auto 20px;
       display: block;
-      transition: transform 0.4s;
-      filter: drop-shadow(0 0 15px var(--neon-red));
+      transition: transform 0.3s;
+      filter: drop-shadow(0 0 10px #ff0000);
     }
     .item img:hover {
-      transform: scale(1.25);
-    }
-    .item video {
-      width: 100%;
-      max-width: 350px;
-      border-radius: 10px;
-      margin: 0 auto 20px;
-      display: none;
-      filter: drop-shadow(0 0 15px var(--neon-red));
+      transform: scale(1.2);
     }
     .item h3 {
       margin: 15px 0;
-      color: var(--neon-red);
+      color: #ff0000;
       font-family: 'Orbitron', sans-serif;
-      font-size: 2.2em;
-      text-shadow: 0 0 15px var(--neon-red);
+      font-size: 2em;
+      text-shadow: 0 0 10px #ff0000;
     }
     .item p {
       margin: 10px 0;
-      font-size: 1.3em;
-      color: var(--dark-red);
-      font-family: 'Inconsolata', monospace;
+      font-size: 1.2em;
+      color: #cc0000;
     }
     .item .sold-out {
       color: #666;
       font-weight: bold;
-      font-size: 1.8em;
+      font-size: 1.5em;
       text-align: center;
-      text-shadow: none;
     }
     .item .stars {
-      color: var(--gold);
-      font-size: 1.5em;
-      margin: 20px 0;
+      color: #ffd700;
+      font-size: 1.3em;
+      margin: 15px 0;
       text-align: center;
-      text-shadow: 0 0 10px var(--gold);
     }
     .confirmed-badge {
       display: inline-block;
-      background: linear-gradient(to right, var(--gold), #ccac00);
+      background: linear-gradient(to right, #ffd700, #ccac00);
       color: #000;
-      padding: 8px 15px;
-      border-radius: 8px;
-      font-size: 1em;
-      margin-left: 15px;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      margin-left: 10px;
+      text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
     }
     .item .comment {
       font-style: italic;
       color: #ffcccc;
-      background: var(--light-bg);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 15px 0;
-      font-size: 1.2em;
-      border-left: 5px solid var(--neon-red);
-      transition: transform 0.3s;
-    }
-    .item .comment:hover {
-      transform: translateX(10px);
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 1.1em;
+      border-left: 4px solid #ff0000;
     }
     .item .username {
-      color: var(--neon-red);
+      color: #ff0000;
       font-weight: bold;
       font-family: 'Orbitron', sans-serif;
     }
     .reviews-btn {
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      background: linear-gradient(45deg, #ff0000, #cc0000);
       color: #fff;
-      padding: 15px 30px;
+      padding: 12px 24px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1.2em;
+      font-size: 1.1em;
       font-family: 'Orbitron', sans-serif;
-      margin: 15px auto;
+      margin: 10px auto;
       display: block;
       transition: transform 0.3s, box-shadow 0.3s;
       text-shadow: 0 0 5px #000;
     }
     .reviews-btn:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--neon-red);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff0000;
     }
     .reviews-container {
       display: none;
-      margin-top: 20px;
-      padding: 20px;
-      background: var(--light-bg);
-      border-radius: 10px;
-      border: 3px solid var(--neon-red);
+      margin-top: 15px;
+      padding: 15px;
+      background: #2a2a2a;
+      border-radius: 8px;
+      border: 2px solid #ff0000;
     }
     .comment-input {
-      padding: 15px;
-      margin: 15px 0;
-      border: 3px solid var(--neon-red);
-      border-radius: 10px;
-      background: var(--light-bg);
+      padding: 12px;
+      margin: 10px 0;
+      border: 2px solid #ff0000;
+      border-radius: 8px;
+      background: #2a2a2a;
       color: #ffcccc;
-      font-size: 1.2em;
+      font-size: 1.1em;
       width: 100%;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      transition: border-color 0.3s;
     }
     .comment-input:focus {
-      border-color: var(--dark-red);
-      box-shadow: 0 0 15px var(--neon-red);
+      border-color: #cc0000;
       outline: none;
     }
     .comment-btn {
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      background: linear-gradient(45deg, #ff0000, #cc0000);
       color: #fff;
-      padding: 15px 30px;
+      padding: 12px 24px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1.2em;
+      font-size: 1.1em;
       font-family: 'Orbitron', sans-serif;
-      margin: 15px auto;
+      margin: 10px auto;
       display: block;
       transition: transform 0.3s, box-shadow 0.3s;
       text-shadow: 0 0 5px #000;
     }
     .comment-btn:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--neon-red);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff0000;
     }
     .comment-btn:disabled {
       background: #666;
@@ -584,13 +494,13 @@
       box-shadow: none;
     }
     .buy-btn {
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      background: linear-gradient(45deg, #ff0000, #cc0000);
       color: #fff;
-      padding: 15px 40px;
+      padding: 15px 30px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1.3em;
+      font-size: 1.2em;
       font-family: 'Orbitron', sans-serif;
       margin: 15px auto;
       display: block;
@@ -598,283 +508,120 @@
       text-shadow: 0 0 5px #000;
     }
     .buy-btn:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--neon-red);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff0000;
     }
     .buy-btn:disabled {
       background: #666;
       cursor: not-allowed;
       box-shadow: none;
     }
-    .cart-btn {
-      background: linear-gradient(45deg, var(--gold), #ccac00);
-      color: #000;
-      padding: 15px 40px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1.3em;
-      font-family: 'Orbitron', sans-serif;
-      margin: 15px auto;
-      display: block;
-      transition: transform 0.3s, box-shadow 0.3s;
-      text-shadow: 0 0 5px #fff;
-    }
-    .cart-btn:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--gold);
-    }
     .job-section {
-      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
-      padding: 40px;
-      border-radius: 15px;
-      margin: 50px auto;
-      max-width: 900px;
+      background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
+      padding: 30px;
+      border-radius: 12px;
+      margin: 40px auto;
+      max-width: 800px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
       animation: slideIn 0.8s ease-out;
-      position: relative;
-      overflow: hidden;
-    }
-    .job-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at bottom right, rgba(255, 0, 0, 0.3), transparent);
-      z-index: 0;
-    }
-    .job-section > * {
-      position: relative;
-      z-index: 1;
     }
     .job-section a {
-      color: var(--neon-red);
+      color: #ff0000;
       text-decoration: none;
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.8em;
+      font-size: 1.5em;
       transition: color 0.3s, text-shadow 0.3s;
-      text-shadow: 0 0 15px var(--neon-red);
+      text-shadow: 0 0 10px #ff0000;
     }
     .job-section a:hover {
-      color: var(--dark-red);
-      text-shadow: 0 0 20px var(--dark-red);
+      color: #cc0000;
+      text-shadow: 0 0 15px #cc0000;
     }
     .cart-icon {
       position: fixed;
       top: 20px;
-      right: 80px;
-      font-size: 2.5em;
-      color: var(--gold);
+      right: 20px;
+      font-size: 2em;
+      color: #ff0000;
       cursor: pointer;
       z-index: 100;
-      text-shadow: 0 0 15px var(--gold);
-      transition: transform 0.3s, text-shadow 0.3s;
+      text-shadow: 0 0 10px #ff0000;
+      transition: transform 0.3s;
     }
     .cart-icon:hover {
-      transform: scale(1.3);
-      text-shadow: 0 0 20px var(--gold);
+      transform: scale(1.2);
     }
     .cart-section {
-      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
-      padding: 40px;
-      border-radius: 15px;
-      margin: 50px auto;
-      max-width: 900px;
+      background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
+      padding: 30px;
+      border-radius: 12px;
+      margin: 40px auto;
+      max-width: 800px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
       display: none;
-      animation: slideIn 0.6s ease-out;
+      animation: slideIn 0.5s ease-out;
     }
     .cart-item {
-      background: var(--light-bg);
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 10px;
+      background: #2a2a2a;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-left: 5px solid var(--neon-red);
-      transition: transform 0.3s;
-    }
-    .cart-item:hover {
-      transform: translateX(10px);
+      border-left: 4px solid #ff0000;
     }
     .cart-item p {
       margin: 0;
-      font-size: 1.3em;
-      color: #ffcccc;
+      font-size: 1.1em;
     }
     .cart-item button {
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      background: linear-gradient(45deg, #ff0000, #cc0000);
       color: #fff;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 1.1em;
-      font-family: 'Orbitron', sans-serif;
-      transition: transform 0.3s, box-shadow 0.3s;
+      font-size: 1em;
+      transition: transform 0.3s;
     }
     .cart-item button:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 15px var(--neon-red);
+      transform: scale(1.1);
     }
     .theme-toggle {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
-      color: #fff;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.2em;
-      transition: transform 0.3s, box-shadow 0.3s;
-      text-shadow: 0 0 5px #000;
-    }
-    .theme-toggle:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--neon-red);
-    }
-    .live-chat {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
-      color: #fff;
-      padding: 15px 30px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.2em;
-      z-index: 100;
-      transition: transform 0.3s, box-shadow 0.3s;
-      text-shadow: 0 0 5px #000;
-    }
-    .live-chat:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px var(--neon-red);
-    }
-    .chat-window {
-      position: fixed;
-      bottom: 140px;
-      right: 20px;
-      width: 350px;
-      max-height: 500px;
-      background: var(--light-bg);
-      border-radius: 15px;
-      border: 3px solid var(--neon-red);
-      display: none;
-      flex-direction: column;
-      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
-      z-index: 99;
-    }
-    .chat-header {
-      background: linear-gradient(to right, var(--neon-red), var(--dark-red));
-      color: #fff;
-      padding: 15px;
-      border-radius: 12px 12px 0 0;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.3em;
-      text-shadow: 0 0 5px #000;
-    }
-    .chat-body {
-      padding: 20px;
-      max-height: 350px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--neon-red) var(--light-bg);
-    }
-    .chat-message {
-      background: #3a3a3a;
-      padding: 10px 15px;
-      margin: 10px 0;
-      border-radius: 8px;
-      font-size: 1.1em;
-      color: #ffcccc;
-    }
-    .chat-message.bot {
-      background: #2a2a2a;
-      border-left: 4px solid var(--neon-red);
-    }
-    .chat-input {
-      display: flex;
-      padding: 15px;
-      background: var(--mid-bg);
-      border-top: 2px solid var(--neon-red);
-      border-radius: 0 0 12px 12px;
-    }
-    .chat-input input {
-      flex: 1;
-      padding: 10px;
-      border: 2px solid var(--neon-red);
-      border-radius: 8px;
-      background: var(--light-bg);
-      color: #ffcccc;
-      font-size: 1.1em;
-      margin-right: 10px;
-    }
-    .chat-input button {
-      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      background: linear-gradient(45deg, #ff0000, #cc0000);
       color: #fff;
       padding: 10px 20px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 1.1em;
       font-family: 'Orbitron', sans-serif;
+      font-size: 1em;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .chat-input button:hover {
+    .theme-toggle:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 15px var(--neon-red);
+      box-shadow: 0 0 15px #ff0000;
     }
-    .stats-section {
-      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
-      padding: 40px;
-      border-radius: 15px;
-      margin: 50px auto;
-      max-width: 900px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
-      animation: slideIn 0.8s ease-out;
+    .dark-theme {
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
     }
-    .stats-section h2 {
-      color: var(--neon-red);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5em;
-      text-shadow: 0 0 15px var(--neon-red);
-      margin-bottom: 30px;
+    .neon-theme {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      filter: hue-rotate(30deg);
     }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-    .stat-card {
-      background: var(--light-bg);
-      padding: 20px;
-      border-radius: 10px;
-      border: 3px solid var(--neon-red);
-      transition: transform 0.3s;
-    }
-    .stat-card:hover {
-      transform: scale(1.1);
-    }
-    .stat-card h3 {
-      color: var(--neon-red);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5em;
-      margin: 10px 0;
-      text-shadow: 0 0 10px var(--neon-red);
-    }
-    .stat-card p {
-      color: #ffcccc;
-      font-size: 1.2em;
+    .item-video {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 8px;
+      margin: 0 auto 20px;
+      display: none;
+      filter: drop-shadow(0 0 10px #ff0000);
     }
   </style>
 </head>
@@ -894,17 +641,6 @@
   <div class="container">
     <div class="menu-icon" onclick="toggleMenu()">☰</div>
     <div class="cart-icon" onclick="showCart()">🛒</div>
-    <div class="live-chat" onclick="toggleChat()">💬</div>
-    <div class="chat-window" id="chat-window">
-      <div class="chat-header">Live Support - @rakrunnin</div>
-      <div class="chat-body" id="chat-body">
-        <div class="chat-message bot">Yo, fam! Hit me up for help with drops or orders. What's good?</div>
-      </div>
-      <div class="chat-input">
-        <input type="text" id="chat-input" placeholder="Type a message...">
-        <button onclick="sendChatMessage()">Send</button>
-      </div>
-    </div>
     <div class="sidebar" id="sidebar">
       <h3>Available Drops</h3>
       <ul id="sidebar-menu">
@@ -914,7 +650,6 @@
         <li onclick="loadPage('fullz')">Fullz</li>
         <li onclick="showAccountSection()">Account</li>
         <li onclick="showCart()">Cart</li>
-        <li onclick="showStats()">Stats</li>
       </ul>
     </div>
     <div class="main-content" id="main-content">
@@ -932,13 +667,9 @@
         <div id="cart-items"></div>
         <button class="buy-btn" onclick="checkout()">Checkout</button>
       </div>
-      <div class="stats-section" id="stats-section" style="display: none;">
-        <h2>Shop Stats</h2>
-        <div class="stats-grid" id="stats-grid"></div>
-      </div>
       <div class="header">
         <h1>RakRunnin Card Shop</h1>
-        <p>Ultimate Darknet Drops - Cards, Accounts, Malware & Fullz - Cash App Only - DM @rakrunnin on Telegram</p>
+        <p>Elite Cards, Accounts, Malware & Fullz - Cash App Only - DM @rakrunnin on Telegram</p>
       </div>
 
       <div class="navbar">
@@ -949,7 +680,6 @@
         <button onclick="filterItems('Amex', 'cardContainer', 'cards')">Amex</button>
         <button onclick="sortItems('cardContainer')">Sort by Price</button>
         <button onclick="sortItemsByRating('cardContainer')">Sort by Rating</button>
-        <button onclick="sortItemsByAvailability('cardContainer')">Sort by Availability</button>
       </div>
 
       <div class="search-bar">
@@ -987,30 +717,30 @@
 
   <script>
     const usernames = [
-      'darkswipe7', 'cashdemonx', 'ghostcarder', 'neonhustler', 'shadowstackz',
-      'blazemoney4', 'cryptokidd', 'slime4profit', 'runninbandz', 'quickflipz'
+      'cggtrey4', 'upoffccs12', 'realbreaswinnrrr', 'trappin4dayz', 'ccslime6',
+      'cashoutkidd9', 'foenem_drip', 'bandz2quick', 'swipegodx', 'hustle4realz'
     ];
     const commentPool = [
-      'Yo, these cards hit different, copped a Visa and cleaned out Nordstrom 🔥',
-      'Malware’s legit, snagged bank logins in 10 min, no cap 💪',
-      'Fullz got my loan approved, fam, this shit too easy 😎',
-      'Saks account was clutch, got drip for days, 10/10 👌',
-      'Took a sec for @rakrunnin to reply, but the CC worked smooth 💸',
-      'Walmart card hit for a 65" TV, no issues, I’m up now 📺',
-      'Trojan X is fire, remote access was plug-and-play, no bs 🔌',
-      'Nordstrom card got me fresh fits, but use a VPN or you cooked 😭',
-      'Bruh, these Amex bins elite, hit Saks for luxury bags 💼',
-      'Keylogger worked like a charm, got PayPal logins quick 🖥️',
-      'Chase card was sold out, but Visa came through for cashout 💰',
-      'Macy’s account had mad balance, copped home goods easy 🛋️',
-      'Fullz are clean, opened a bank account no questions asked 🏦',
-      'Discover card hit for online shops, low flags, high wins 🎯',
-      'RAT Z got me full control, snatched files like nothin 🕵️‍♂️',
-      'Copped a card for subscriptions, Netflix been free for months 📺',
-      'Saks account needed OTP, but @rakrunnin hooked it up 🙏',
-      'Visa card was fire for ATM cashouts, no flags, pure profit 💵',
-      'Malware setup was dummy easy, snagged credentials in a day 🚀',
-      'Fullz got me a credit line, I’m eatin good now, fam 🍽️'
+      'I always by ccs frm here ts easy if yk wa u doin',
+      'ts be hittn for my cash app yoooo 😭',
+      'I don’t recommend low bal card they get flagged bro damnnnn 🤦‍♂️',
+      'if bro start responding faster I’ll leave a 5star but it’s decent I bought good eats 👀',
+      'foe I dead ass think ts was bap off these comments like idk how to explain ts I’m up now tho nbs',
+      'smb said he b scamming I had to see spent 25$ gang you just need to start responding faster 😭😭',
+      'please use a vpn if u gettin eats my homie made that mistake but the eats decent 👌🏽',
+      'came in clutch for back to school',
+      'idk bout y’all but broski responded for me 10/10',
+      'ccs need otp for saks bro pleaseee restock on saks overall it’s decent 😁😁',
+      'used da cc on saks it’s decent ima leave another review if they come',
+      'gangggg my cash app locked and I used dis card came in clutch no bs',
+      'foenem be takn ova long to answer but the cc work 😂🔥',
+      'copped some drip wit this, no cap, shit clean af',
+      'hit walmart for a tv, dis card went dummy 💪',
+      'took a min but got my order, worth it tho 🔥',
+      'paypal went smooth, no issues, ima cop again',
+      'dis fullz got me a loan, too easy bruh 💯',
+      'malware hit quick, snagged bank logins no prob',
+      'card was fire but foenem slow to respond 😭'
     ];
     const cardData = [
       { type: 'Visa', bin: '414720', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg', use: 'Shop online or cash out at ATMs. Clean bins, high limits.', video: 'https://example.com/visa-demo.mp4', reviews: []},
@@ -1031,7 +761,7 @@
       { type: 'RAT Z', bin: 'RATZ', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Steal files and control devices remotely. High success.', video: 'https://example.com/ratz-demo.mp4', reviews: []}
     ];
     const fullzData = [
-      { type: 'Fullz - John Doe', bin: 'FULL1', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use open bank accounts or apply for loans. Clean data.', video: 'https://example.com/fullz1-demo.mp4', reviews: []},
+      { type: 'Fullz - John Doe', bin: 'FULL1', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Open bank accounts or apply for loans. Clean data.', video: 'https://example.com/fullz1-demo.mp4', reviews: []},
       { type: 'Fullz - Jane Smith', bin: 'FULL2', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Use for credit applications or online purchases. High success.', video: 'https://example.com/fullz2-demo.mp4', reviews: []},
       { type: 'Fullz - Mike Brown', bin: 'FULL3', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Perfect for high-value applications. Verified data.', video: 'https://example.com/fullz3-demo.mp4', soldOut: true, reviews: []}
     ];
@@ -1077,41 +807,20 @@
     function toggleMenu() {
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('active');
-      if (sidebar.classList.contains('active')) {
-        document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
-        document.getElementById('account-section').style.display = 'none';
-        document.getElementById('cart-section').style.display = 'none';
-        document.getElementById('stats-section').style.display = 'none';
-      }
     }
 
     function showAccountSection() {
       document.getElementById('account-section').style.display = 'block';
       document.getElementById('cart-section').style.display = 'none';
-      document.getElementById('stats-section').style.display = 'none';
       document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
       document.getElementById('loading-screen').style.display = 'none';
-      document.getElementById('sidebar').classList.remove('active');
     }
 
     function showCart() {
       document.getElementById('cart-section').style.display = 'block';
       document.getElementById('account-section').style.display = 'none';
-      document.getElementById('stats-section').style.display = 'none';
       document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
-      document.getElementById('loading-screen').style.display = 'none';
-      document.getElementById('sidebar').classList.remove('active');
       displayCart();
-    }
-
-    function showStats() {
-      document.getElementById('stats-section').style.display = 'block';
-      document.getElementById('account-section').style.display = 'none';
-      document.getElementById('cart-section').style.display = 'none';
-      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
-      document.getElementById('loading-screen').style.display = 'none';
-      document.getElementById('sidebar').classList.remove('active');
-      displayStats();
     }
 
     function createAccount() {
@@ -1127,7 +836,7 @@
           alert('Username already taken, fam.');
           return;
         }
-        users[username] = { password, purchased: false, cart: [], purchases: 0 };
+        users[username] = { password, purchased: false, cart: [] };
         localStorage.setItem('users', JSON.stringify(users));
         localStorage.setItem('currentUser', username);
         document.getElementById('user-info').textContent = `Logged in as ${username}`;
@@ -1170,7 +879,6 @@
       users[username].cart.push(item);
       localStorage.setItem('users', JSON.stringify(users));
       alert(`${item.cardType} added to cart!`);
-      updateStats();
     }
 
     function displayCart() {
@@ -1204,7 +912,6 @@
       users[username].cart.splice(index, 1);
       localStorage.setItem('users', JSON.stringify(users));
       displayCart();
-      updateStats();
     }
 
     function checkout() {
@@ -1216,10 +923,8 @@
       }
       const users = JSON.parse(localStorage.getItem('users') || '{}');
       users[username].purchased = true;
-      users[username].purchases = (users[username].purchases || 0) + users[username].cart.length;
       users[username].cart = [];
       localStorage.setItem('users', JSON.stringify(users));
-      updateStats();
       window.location.href = 'https://t.me/rakrunnin';
     }
 
@@ -1233,68 +938,9 @@
         alert('Gotta make a confirmed purchase to comment, fam.');
         return;
       }
-      item.reviews.push({ rating: Math.random() * 2 + 3, comment, username });
+      item.reviews.push({ rating: 0, comment, username });
       commentInput.value = '';
       displayItems('all', getContainerId(item.cardType), item.category);
-      updateStats();
-    }
-
-    function toggleChat() {
-      const chatWindow = document.getElementById('chat-window');
-      chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function sendChatMessage() {
-      const chatInput = document.getElementById('chat-input');
-      const message = chatInput.value.trim();
-      if (!message) return;
-      const username = localStorage.getItem('currentUser') || 'Guest';
-      const chatBody = document.getElementById('chat-body');
-      const userMessage = document.createElement('div');
-      userMessage.className = 'chat-message';
-      userMessage.textContent = `${username}: ${message}`;
-      chatBody.appendChild(userMessage);
-      chatInput.value = '';
-      chatBody.scrollTop = chatBody.scrollHeight;
-      setTimeout(() => {
-        const botMessage = document.createElement('div');
-        botMessage.className = 'chat-message bot';
-        botMessage.textContent = `Yo ${username}, I'm checkin' your request. Hit up @rakrunnin on Telegram for the real deal or keep it here for quick answers!`;
-        chatBody.appendChild(botMessage);
-        chatBody.scrollTop = chatBody.scrollHeight;
-      }, 1000);
-    }
-
-    function displayStats() {
-      const statsGrid = document.getElementById('stats-grid');
-      statsGrid.innerHTML = '';
-      const username = localStorage.getItem('currentUser');
-      const users = JSON.parse(localStorage.getItem('users') || '{}');
-      const userPurchases = users[username]?.purchases || 0;
-      const totalItems = [...cardData, ...accountData, ...malwareData, ...fullzData].length;
-      const availableItems = [...cardData, ...accountData, ...malwareData, ...fullzData].filter(item => !item.soldOut).length;
-      const totalReviews = [...cardData, ...accountData, ...malwareData, ...fullzData].reduce((sum, item) => sum + item.reviews.length, 0);
-      const stats = [
-        { title: 'Your Purchases', value: userPurchases },
-        { title: 'Total Drops', value: totalItems },
-        { title: 'Available Drops', value: availableItems },
-        { title: 'Total Reviews', value: totalReviews }
-      ];
-      stats.forEach(stat => {
-        const statCard = document.createElement('div');
-        statCard.className = 'stat-card';
-        statCard.innerHTML = `
-          <h3>${stat.title}</h3>
-          <p>${stat.value}</p>
-        `;
-        statsGrid.appendChild(statCard);
-      });
-    }
-
-    function updateStats() {
-      if (document.getElementById('stats-section').style.display === 'block') {
-        displayStats();
-      }
     }
 
     function generateItem(category) {
@@ -1305,7 +951,7 @@
       const expiryYear = String(Math.floor(Math.random() * 10) + 24);
       const cvv = category === 'cards' ? String(Math.floor(Math.random() * 1000)).padStart(3, '0') : '';
       const price = Math.floor(Math.random() * 76 + 25);
-      const soldOut = item.soldOut || Math.random() < 0.15;
+      const soldOut = item.soldOut || Math.random() < 0.2;
       const usedComments = [];
       const usedUsernames = [];
       const reviewCount = Math.floor(Math.random() * 2) + 2;
@@ -1350,14 +996,12 @@
       }
       filteredItems.slice(0, 50).forEach(item => addItem(item, container));
       updateSidebar();
-      updateStats();
     }
 
     function addItem(item, container) {
       const reviewsId = `reviews-${item.cardType}-${item.cardNumber.replace(/-/g, '')}`;
       const itemDiv = document.createElement('div');
       itemDiv.className = 'item';
-      itemDiv.onclick = () => toggleReviews(reviewsId); // Click entire item to toggle reviews
       const users = JSON.parse(localStorage.getItem('users') || '{}');
       const currentUser = localStorage.getItem('currentUser');
       const canComment = currentUser && users[currentUser]?.purchased;
@@ -1374,7 +1018,7 @@
         ${item.expiry ? `<p>Expiry: ${item.expiry} | CVV: ***</p>` : ''}
         <p>${item.use}</p>
         <p class="stars">${'★'.repeat(Math.floor(item.reviews[0].rating))}${item.reviews[0].rating % 1 ? '☆' : ''} ${item.reviews[0].rating.toFixed(1)}/5</p>
-        <button class="reviews-btn" onclick="event.stopPropagation(); toggleReviews('${reviewsId}')">See Reviews</button>
+        <button class="reviews-btn" onclick="toggleReviews('${reviewsId}')">See Reviews</button>
         <div class="reviews-container" id="${reviewsId}">
           ${item.reviews.map(review => `
             <p class="comment">
@@ -1384,11 +1028,10 @@
           `).join('')}
           ${canComment ? `
             <input type="text" class="comment-input" id="comment-input-${reviewsId}" placeholder="Drop a comment...">
-            <button class="comment-btn" onclick="event.stopPropagation(); addComment(${JSON.stringify(item)}, '${reviewsId}')">Post Comment</button>
+            <button class="comment-btn" onclick="addComment(${JSON.stringify(item)}, '${reviewsId}')">Post Comment</button>
           ` : ''}
         </div>
-        <button class="buy-btn" ${item.soldOut ? 'disabled' : ''} onclick="event.stopPropagation(); checkout()">Contact to Purchase</button>
-        ${item.soldOut ? '' : `<button class="cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(item)})">Add to Cart</button>`}
+        <button class="buy-btn" ${item.soldOut ? 'disabled' : ''} onclick="addToCart(${JSON.stringify(item)})">Add to Cart</button>
       `;
       container.appendChild(itemDiv);
       if (!item.soldOut) {
@@ -1427,16 +1070,12 @@
           const li = document.createElement('li');
           li.textContent = `${type} (${count} available)`;
           li.className = count === 0 ? 'sold-out' : '';
-          li.onclick = count > 0 ? () => {
-            filterItems(type, category.container, category.id);
-            document.getElementById('sidebar').classList.remove('active');
-          } : null;
+          li.onclick = count > 0 ? () => filterItems(type, category.container, category.id) : null;
           sidebarMenu.appendChild(li);
         });
       });
       sidebarMenu.innerHTML += '<li onclick="showAccountSection()">Account</li>';
       sidebarMenu.innerHTML += '<li onclick="showCart()">Cart</li>';
-      sidebarMenu.innerHTML += '<li onclick="showStats()">Stats</li>';
     }
 
     function searchItems(query) {
@@ -1450,7 +1089,6 @@
         });
       });
       updateSidebar();
-      updateStats();
     }
 
     function filterItems(type, containerId, category) {
@@ -1468,7 +1106,6 @@
       container.innerHTML = '';
       items.forEach(item => container.appendChild(item));
       updateSidebar();
-      updateStats();
     }
 
     function sortItemsByRating(containerId) {
@@ -1482,21 +1119,6 @@
       container.innerHTML = '';
       items.forEach(item => container.appendChild(item));
       updateSidebar();
-      updateStats();
-    }
-
-    function sortItemsByAvailability(containerId) {
-      const container = document.getElementById(containerId);
-      const items = Array.from(container.children);
-      items.sort((a, b) => {
-        const soldOutA = a.querySelector('.sold-out') ? 1 : 0;
-        const soldOutB = b.querySelector('.sold-out') ? 1 : 0;
-        return soldOutA - soldOutB;
-      });
-      container.innerHTML = '';
-      items.forEach(item => container.appendChild(item));
-      updateSidebar();
-      updateStats();
     }
 
     function toggleTheme() {
@@ -1513,14 +1135,12 @@
         document.getElementById('fullz-section').style.display = sectionId === 'fullz' ? 'block' : 'none';
         document.getElementById('account-section').style.display = 'none';
         document.getElementById('cart-section').style.display = 'none';
-        document.getElementById('stats-section').style.display = 'none';
         if (sectionId === 'cards') displayItems('all', 'cardContainer', 'cards');
         else if (sectionId === 'accounts') displayItems('all', 'accountContainer', 'accounts');
         else if (sectionId === 'malware') displayItems('all', 'malwareContainer', 'malware');
         else if (sectionId === 'fullz') displayItems('all', 'fullzContainer', 'fullz');
         document.getElementById('loading-screen').style.display = 'none';
-        document.getElementById('sidebar').classList.remove('active');
-      }, 1200);
+      }, 1500);
     }
 
     function verifyCaptcha() {
@@ -1544,7 +1164,6 @@
       displayItems('all', 'accountContainer', 'accounts');
       displayItems('all', 'malwareContainer', 'malware');
       displayItems('all', 'fullzContainer', 'fullz');
-      updateStats();
     };
   </script>
 </body>
