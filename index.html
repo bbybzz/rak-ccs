@@ -5,23 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RakRunnin Darknet Emporium</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <style>
-    :root {
-      --neon-red: #ff1a1a;
-      --neon-blue: #00ccff;
-      --cyber-gold: #ffd700;
-      --void-black: #0a0a0a;
-      --dark-grid: #1a1a1a;
-      --glow: rgba(255, 26, 26, 0.7);
-    }
     body {
-      background: linear-gradient(145deg, var(--void-black), var(--dark-grid));
-      color: #ffcccc;
-      font-family: 'VT323', monospace;
+      background: #111;
+      color: #ccc;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
@@ -33,20 +24,7 @@
       z-index: -1;
       width: 100%;
       height: 100%;
-      opacity: 0.3;
-    }
-    .particle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: var(--neon-blue);
-      border-radius: 50%;
-      pointer-events: none;
-      animation: particleFlow 1.5s linear infinite;
-    }
-    @keyframes particleFlow {
-      0% { transform: translateY(0); opacity: 0.8; }
-      100% { transform: translateY(-150px); opacity: 0; }
+      opacity: 0.5;
     }
     #captcha-screen {
       position: fixed;
@@ -54,181 +32,163 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(10, 10, 10, 0.95);
+      background: rgba(0, 0, 0, 0.9);
       z-index: 1000;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      animation: glitchFade 0.8s;
     }
     #captcha-screen h2 {
-      color: var(--neon-red);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      text-shadow: 0 0 15px var(--neon-red);
+      color: #fff;
+      font-size: 2.5rem;
     }
     #captcha-screen input, #account-section input, .cashapp-input {
-      padding: 15px;
-      margin: 20px;
-      border: 3px solid var(--neon-red);
-      border-radius: 10px;
-      background: var(--dark-grid);
-      color: #ffcccc;
-      font-size: 1.5rem;
-      width: 250px;
+      padding: 10px;
+      margin: 15px;
+      border: 2px solid #444;
+      border-radius: 5px;
+      background: #222;
+      color: #ccc;
+      font-size: 1.2rem;
+      width: 200px;
     }
     #captcha-screen input:focus, #account-section input:focus, .cashapp-input:focus {
-      border-color: var(--neon-blue);
-      box-shadow: 0 0 20px var(--neon-blue);
+      border-color: #666;
       outline: none;
     }
     button {
-      background: linear-gradient(45deg, var(--neon-red), #0088cc);
+      background: #333;
       color: #fff;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
+      padding: 10px 20px;
+      border: 2px solid #555;
+      border-radius: 5px;
       cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
-      transition: transform 0.3s, box-shadow 0.3s;
+      font-size: 1.2rem;
     }
     button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px var(--neon-red);
+      background: #444;
     }
     button:disabled {
-      background: #666;
+      background: #555;
       cursor: not-allowed;
     }
     .menu-icon {
       position: fixed;
-      top: 15px;
-      left: 15px;
-      font-size: 2.5rem;
-      color: var(--neon-red);
+      top: 10px;
+      left: 10px;
+      font-size: 2rem;
+      color: #ccc;
       cursor: pointer;
       z-index: 100;
     }
     .sidebar {
-      width: 250px;
-      background: var(--dark-grid);
-      padding: 20px;
+      width: 200px;
+      background: #222;
+      padding: 15px;
       position: fixed;
       height: 100%;
       transform: translateX(-100%);
-      transition: transform 0.4s;
+      transition: transform 0.3s;
       z-index: 99;
     }
     .sidebar.active {
       transform: translateX(0);
     }
     .sidebar ul li {
-      margin: 20px 0;
-      font-size: 1.5rem;
+      margin: 15px 0;
+      font-size: 1.2rem;
       cursor: pointer;
-      padding: 10px;
-      border-radius: 10px;
-      transition: all 0.3s;
+      padding: 8px;
+      border-radius: 5px;
     }
     .sidebar ul li:hover {
-      background: #2a2a2a;
-      color: var(--neon-blue);
-      transform: translateX(10px);
+      background: #333;
+      color: #fff;
     }
     .main-content {
-      padding: 40px;
+      padding: 30px;
       width: 100%;
     }
     .user-info {
       position: fixed;
-      top: 15px;
-      left: 80px;
-      color: var(--neon-blue);
-      font-size: 1.5rem;
-      background: var(--dark-grid);
-      padding: 10px 20px;
-      border-radius: 10px;
+      top: 10px;
+      left: 60px;
+      color: #ccc;
+      font-size: 1.2rem;
+      background: #222;
+      padding: 8px 15px;
+      border-radius: 5px;
     }
     .header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3.5rem;
-      color: var(--neon-red);
-      text-shadow: 0 0 15px var(--neon-red);
+      font-size: 2.5rem;
+      color: #fff;
       text-align: center;
     }
     .item-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      padding: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
     }
     .item {
-      background: var(--dark-grid);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px var(--glow);
-      transition: transform 0.3s;
-      cursor: pointer;
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #444;
     }
     .item:hover {
-      transform: translateY(-10px);
+      border-color: #666;
     }
     .item canvas {
       width: 100%;
-      height: 150px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 0 10px var(--neon-red));
+      height: 120px;
+      border-radius: 5px;
+      margin-bottom: 15px;
     }
     .item h3 {
-      color: var(--neon-red);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
+      color: #fff;
+      font-size: 1.5rem;
     }
     .item p {
-      font-size: 1.3rem;
-      color: var(--neon-blue);
+      font-size: 1rem;
+      color: #ccc;
     }
     .item .comment {
       font-style: italic;
-      background: #2a2a2a;
-      padding: 10px;
-      border-radius: 10px;
+      background: #333;
+      padding: 8px;
+      border-radius: 5px;
       margin: 10px 0;
     }
     .cart-icon {
       position: fixed;
-      top: 15px;
-      right: 15px;
-      font-size: 2.5rem;
-      color: var(--cyber-gold);
+      top: 10px;
+      right: 10px;
+      font-size: 2rem;
+      color: #ccc;
       cursor: pointer;
     }
     .cart-section, .account-section, .checkout-section, .trending-section, .transaction-section {
-      background: var(--dark-grid);
-      padding: 30px;
-      border-radius: 15px;
-      margin: 40px auto;
-      max-width: 800px;
-      box-shadow: 0 10px 20px var(--glow);
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 30px auto;
+      max-width: 700px;
+      border: 1px solid #444;
       display: none;
     }
     .cart-item, .transaction-item {
-      background: #2a2a2a;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 10px;
+      background: #333;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
       display: flex;
       justify-content: space-between;
+      color: #ccc;
     }
     .trending-section {
       display: block;
-    }
-    @keyframes glitchFade {
-      0% { opacity: 0; transform: translate(2px, -2px); }
-      100% { opacity: 1; transform: translate(0); }
     }
   </style>
 </head>
@@ -291,51 +251,54 @@
         <div class="item-container" id="accountContainer"></div>
       </div>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
   </div>
 
   <script>
     // Data
     const usernames = [
-      'DarkSwipe', 'CashDemon', 'GhostCarder', 'NeonHustler', 'ShadowStackz',
-      'BlazeMoney', 'CryptoKidd', 'SlimeProfit', 'RunninBandz', 'QuickFlipz',
-      'VoidRunner', 'CyberGhostX', 'Stackz4Dayz', 'GlitchBandit', 'DarkHustle',
-      'NeonReaper', 'ShadowFlip', 'CryptoShark', 'BlitzCash', 'PhantomDrop'
+      'DarkSwipe', 'CashDemon', 'GhostCarder', 'ShadowStackz', 'BlazeMoney',
+      'CryptoKidd', 'SlimeProfit', 'RunninBandz', 'QuickFlipz', 'VoidRunner',
+      'CyberGhostX', 'Stackz4Dayz', 'GlitchBandit', 'DarkHustle', 'NeonReaper',
+      'ShadowFlip', 'CryptoShark', 'BlitzCash', 'PhantomDrop', 'IceBandit'
     ];
     const comments = [
-      'Visa card hit Saks clean, copped mad drip 🔥',
-      'MasterCard bins are fire, no declines 💸',
-      'Saks account had $2k balance, too easy 👌',
-      'Walmart card got me a TV, no cap 📺',
-      'Amex smashed luxury stores, pure profit 💼',
-      'Quick cashout with Visa, ATMs eatin’ 💰',
-      'Saks drop was smooth, copped Gucci 😎',
-      'MasterCard worked for subscriptions, no flags 🚀',
-      'Amex bins hit high-end shops, clean work 💳',
-      'Walmart gift card copped electronics, flawless 📦',
-      'Visa was plug-n-play, ran up the bag 🤑',
-      'Saks account got me fresh fits, no hassle 🙏',
-      'MasterCard hittin’ online stores, too good 🎯',
-      'Amex card was elite, copped a Rolex ⌚',
-      'Walmart card had no limits, grabbed gear 🛒',
-      'Visa bins are dummy clean, no blocks 💪',
-      'Saks drop was straight gas, luxury vibes 🛍️',
-      'MasterCard cashout was quick, pure bands 🏦',
-      'Amex hit for big purchases, no issues 💯',
-      'Walmart card got me free shit, livin’ good 📺'
+      'Visa card hit Saks clean, copped mad drip!',
+      'MasterCard bins are fire, no declines.',
+      'Saks account had $2k balance, too easy.',
+      'Walmart card got me a TV, no cap.',
+      'Amex smashed luxury stores, pure profit.',
+      'Quick cashout with Visa, ATMs eatin’.',
+      'Saks drop was smooth, copped Gucci.',
+      'MasterCard worked for subscriptions, no flags.',
+      'Amex bins hit high-end shops, clean work.',
+      'Walmart gift card copped electronics, flawless.',
+      'Visa was plug-n-play, ran up the bag.',
+      'Saks account got me fresh fits, no hassle.',
+      'MasterCard hittin’ online stores, too good.',
+      'Amex card was elite, copped a Rolex.',
+      'Walmart card had no limits, grabbed gear.',
+      'Visa bins are dummy clean, no blocks.',
+      'Saks drop was straight gas, luxury vibes.',
+      'MasterCard cashout was quick, pure bands.',
+      'Amex hit for big purchases, no issues.',
+      'Walmart card got me free shit, livin’ good.'
     ];
     const cardData = [
       { type: 'Visa', bin: '414720', price: 50, model: 'card', reviews: [] },
       { type: 'MasterCard', bin: '555555', price: 45, model: 'card', reviews: [] },
-      { type: 'Amex', bin: '378282', price: 60, model: 'card', reviews: [] }
+      { type: 'Amex', bin: '378282', price: 60, model: 'card', reviews: [] },
+      { type: 'Discover', bin: '601111', price: 55, model: 'card', reviews: [] },
+      { type: 'Chase', bin: '426684', price: 70, model: 'card', reviews: [] }
     ];
     const accountData = [
       { type: 'Saks Account', bin: 'SAKS', price: 80, model: 'card', reviews: [] },
-      { type: 'Walmart Gift Card', bin: 'WAL', price: 65, model: 'card', soldOut: true, reviews: [] }
+      { type: 'Walmart Gift Card', bin: 'WAL', price: 65, model: 'card', soldOut: true, reviews: [] },
+      { type: 'Target Account', bin: 'TAR', price: 75, model: 'card', reviews: [] },
+      { type: 'Amazon Gift Card', bin: 'AMZ', price: 60, model: 'card', reviews: [] },
+      { type: 'Nordstrom Account', bin: 'NOR', price: 85, model: 'card', reviews: [] }
     ];
     let cart = [];
     let transactionLog = JSON.parse(localStorage.getItem('transactionLog')) || [];
-    let userBehavior = { clicks: [], cartAdds: [] };
 
     // Assign Unique Reviews
     function assignReviews() {
@@ -360,32 +323,20 @@
     }
     assignReviews();
 
-    // Particle System
-    function createParticles() {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      particle.style.left = `${Math.random() * 100}vw`;
-      particle.style.top = `${Math.random() * 100}vh`;
-      particle.style.animationDelay = `${Math.random()}s`;
-      document.body.appendChild(particle);
-      setTimeout(() => particle.remove(), 1500);
-    }
-    setInterval(createParticles, 300);
-
     // Background Animation
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.position.z = 20;
-    const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-    const material = new THREE.MeshBasicMaterial({ color: 0xff1a1a, wireframe: true });
-    const torus = new THREE.Mesh(geometry, material);
-    scene.add(torus);
+    camera.position.z = 30;
+    const geometry = new THREE.BoxGeometry(10, 10, 10);
+    const material = new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
     function animateBackground() {
       requestAnimationFrame(animateBackground);
-      torus.rotation.x += 0.01;
-      torus.rotation.y += 0.01;
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
       renderer.render(scene, camera);
     }
     animateBackground();
@@ -414,7 +365,7 @@
           }
         });
       } else {
-        alert('Wrong answer, fam. Try 9 + 4 again.');
+        alert('Wrong answer. Try 9 + 4 again.');
       }
     }
 
@@ -465,20 +416,15 @@
       displayTransactions();
     }
 
-    function toggleTheme() {
-      document.body.classList.toggle('cyber-theme');
-      localStorage.setItem('theme', document.body.classList.contains('cyber-theme') ? 'cyber' : 'default');
-    }
-
     // Account Management
     function createAccount() {
       const username = document.getElementById('username-input').value.trim();
       const password = document.getElementById('password-input').value.trim();
       if (username && password) {
         localStorage.setItem('user_' + username, password);
-        alert('Account created, fam! Login now.');
+        alert('Account created. Login now.');
       } else {
-        alert('Fill in both fields, fam.');
+        alert('Fill in both fields.');
       }
     }
 
@@ -497,7 +443,7 @@
           }
         });
       } else {
-        alert('Wrong username or password, fam.');
+        alert('Wrong username or password.');
       }
     }
 
@@ -512,55 +458,34 @@
       const container = document.getElementById(containerId);
       container.innerHTML = '';
       items.forEach(item => {
-        const finalPrice = Math.round(item.price * (item.discount || 1));
         const itemElement = document.createElement('div');
         itemElement.className = 'item';
         itemElement.innerHTML = `
           <h3>${item.type} (BIN: ${item.bin})</h3>
-          <p>Price: $$  {finalPrice}${item.discount < 1 ? ' (20% OFF)' : ''}</p>
+          <p>Price: $$  {item.price}</p>
           ${item.reviews.length ? `<div class="comment"><span>${item.reviews[0].username}</span>: ${item.reviews[0].comment}</div>` : ''}
-          ${item.soldOut ? '<p>Sold Out</p>' : `<button ${!localStorage.getItem('currentUser') ? 'disabled' : ''} onclick="addToCart('${item.type}', ${finalPrice})">Add to Cart</button>`}
+          ${item.soldOut ? '<p>Sold Out</p>' : `<button ${!localStorage.getItem('currentUser') ? 'disabled' : ''} onclick="addToCart('${item.type}', ${item.price})">Add to Cart</button>`}
         `;
         const canvas = create3DModel(item);
         itemElement.prepend(canvas);
         container.appendChild(itemElement);
-        userBehavior.clicks.push({ item: item.type, timestamp: new Date() });
       });
     }
 
     function create3DModel(item) {
       const canvas = document.createElement('canvas');
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, 300 / 150, 0.1, 1000);
+      const camera = new THREE.PerspectiveCamera(75, 250 / 120, 0.1, 1000);
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-      renderer.setSize(300, 150);
+      renderer.setSize(250, 120);
       camera.position.z = 5;
       const geometry = new THREE.BoxGeometry(2, 1, 0.1);
-      const material = new THREE.MeshBasicMaterial({ color: 0xff1a1a, wireframe: true });
+      const material = new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true });
       const model = new THREE.Mesh(geometry, material);
       scene.add(model);
-      let isDragging = false;
-      let previousMousePosition = { x: 0, y: 0 };
-      canvas.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        previousMousePosition = { x: e.clientX, y: e.clientY };
-      });
-      canvas.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-          const deltaMove = {
-            x: e.clientX - previousMousePosition.x,
-            y: e.clientY - previousMousePosition.y
-          };
-          model.rotation.y += deltaMove.x * 0.01;
-          model.rotation.x += deltaMove.y * 0.01;
-          previousMousePosition = { x: e.clientX, y: e.clientY };
-        }
-      });
-      canvas.addEventListener('mouseup', () => isDragging = false);
-      canvas.addEventListener('mouseleave', () => isDragging = false);
       function animate() {
         requestAnimationFrame(animate);
-        if (!isDragging) model.rotation.y += 0.01;
+        model.rotation.y += 0.01;
         renderer.render(scene, camera);
       }
       animate();
@@ -569,14 +494,13 @@
 
     // Trending Section
     function loadTrending() {
-      const trendingItems = [...cardData, ...accountData].sort(() => Math.random() - 0.5).slice(0, 2);
+      const trendingItems = [...cardData, ...accountData].sort(() => Math.random() - 0.5).slice(0, 3);
       loadItems('trendingContainer', trendingItems);
     }
 
     // Cart
     function addToCart(type, price) {
       cart.push({ type, price });
-      userBehavior.cartAdds.push({ item: type, timestamp: new Date() });
       alert(`${type} added to cart!`);
       displayCart();
     }
@@ -603,7 +527,7 @@
     // Checkout
     function initiateCheckout() {
       if (!cart.length) {
-        alert('Cart is empty, fam.');
+        alert('Cart is empty.');
         return;
       }
       document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
@@ -629,7 +553,7 @@
       };
       transactionLog.push(tx);
       localStorage.setItem('transactionLog', JSON.stringify(transactionLog));
-      alert(`Payment of $${total} sent to ${cashappHandle}. DM @rakrunnin on Telegram for details.`);
+      alert(`Payment of $${total} sent to ${cashappHandle}. Check @rakrunnin on Telegram for details.`);
       cart = [];
       document.getElementById('cashapp-handle').value = '';
       showTransactions();
@@ -648,7 +572,6 @@
     }
 
     // Initialize
-    if (localStorage.getItem('theme') === 'cyber') document.body.classList.add('cyber-theme');
     document.getElementById('captcha-screen').style.display = 'flex';
     loadTrending();
   </script>
