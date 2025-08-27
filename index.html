@@ -1,30 +1,31 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RakRunnin Darknet Emporium</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <title>RakRunnin Card Shop - Ultimate Darknet Drops</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --neon-red: #ff0000;
+      --dark-red: #cc0000;
+      --gold: #ffd700;
+      --dark-bg: #0a0a0a;
+      --mid-bg: #1a1a1a;
+      --light-bg: #2a2a2a;
+    }
     body {
-      background: #111;
-      color: #ccc;
-      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, var(--dark-bg), var(--mid-bg));
+      color: #ffcccc;
+      font-family: 'Roboto Mono', monospace;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      scroll-behavior: smooth;
+      transition: filter 0.5s;
     }
-    canvas#bgCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      opacity: 0.5;
+    body.neon-theme {
+      filter: hue-rotate(30deg) brightness(1.1);
     }
     #captcha-screen {
       position: fixed;
@@ -32,418 +33,1122 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.98);
       z-index: 1000;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      backdrop-filter: blur(15px);
+      animation: fadeIn 0.5s ease-in;
     }
     #captcha-screen h2 {
-      color: #fff;
-      font-size: 2.5rem;
+      color: var(--neon-red);
+      text-shadow: 0 0 15px var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5em;
+      animation: pulse 1.5s infinite;
     }
-    #captcha-screen input, #account-section input, .cashapp-input {
-      padding: 10px;
-      margin: 15px;
-      border: 2px solid #444;
-      border-radius: 5px;
-      background: #222;
-      color: #ccc;
-      font-size: 1.2rem;
-      width: 200px;
+    #captcha-screen input {
+      padding: 15px;
+      margin: 20px 0;
+      border: 3px solid var(--neon-red);
+      border-radius: 10px;
+      background: var(--mid-bg);
+      color: #ffcccc;
+      font-size: 1.3em;
+      width: 250px;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
-    #captcha-screen input:focus, #account-section input:focus, .cashapp-input:focus {
-      border-color: #666;
+    #captcha-screen input:focus {
+      border-color: var(--dark-red);
+      box-shadow: 0 0 15px var(--neon-red);
       outline: none;
     }
-    button {
-      background: #333;
+    #captcha-screen button {
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
       color: #fff;
-      padding: 10px 20px;
-      border: 2px solid #555;
-      border-radius: 5px;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: 1.3em;
+      font-family: 'Orbitron', sans-serif;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #000;
     }
-    button:hover {
-      background: #444;
+    #captcha-screen button:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--neon-red);
     }
-    button:disabled {
-      background: #555;
-      cursor: not-allowed;
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.98);
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3em;
+      text-shadow: 0 0 15px var(--neon-red);
+    }
+    #loading-screen p {
+      margin: 20px 0;
+    }
+    .stick-figure {
+      width: 300px;
+      height: 300px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="20" r="12" fill="%23ff0000" filter="url(%23glow)"/><line x1="50" y1="32" x2="50" y2="65" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="40" x2="30" y2="50" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="40" x2="70" y2="50" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="65" x2="40" y2="85" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="65" x2="60" y2="85" stroke="%23ff0000" stroke-width="6"/><rect x="75" y="10" width="20" height="25" fill="%23ffd700" rx="5"/><text x="82.5" y="27" fill="%23ff0000" font-size="18">$</text><defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>') no-repeat center;
+      animation: chase 1.2s infinite ease-in-out;
+    }
+    @keyframes chase {
+      0% { transform: translateX(0) rotate(0deg) scale(1); }
+      50% { transform: translateX(80px) rotate(15deg) scale(1.1); }
+      100% { transform: translateX(0) rotate(0deg) scale(1); }
+    }
+    @keyframes pulse {
+      0% { text-shadow: 0 0 15px var(--neon-red); }
+      50% { text-shadow: 0 0 25px var(--neon-red); }
+      100% { text-shadow: 0 0 15px var(--neon-red); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(60px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-1px, 1px); }
+      80% { transform: translate(1px, -1px); }
+      100% { transform: translate(0); }
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
     }
     .menu-icon {
       position: fixed;
-      top: 10px;
-      left: 10px;
-      font-size: 2rem;
-      color: #ccc;
+      top: 20px;
+      left: 20px;
+      font-size: 3em;
+      color: var(--neon-red);
       cursor: pointer;
       z-index: 100;
+      text-shadow: 0 0 15px var(--neon-red);
+      transition: transform 0.3s, text-shadow 0.3s;
+    }
+    .menu-icon:hover {
+      transform: rotate(180deg);
+      text-shadow: 0 0 20px var(--neon-red);
     }
     .sidebar {
-      width: 200px;
-      background: #222;
-      padding: 15px;
+      width: 350px;
+      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
+      padding: 40px 20px;
       position: fixed;
       height: 100%;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--neon-red) var(--mid-bg);
+      box-shadow: 6px 0 20px rgba(255, 0, 0, 0.6);
       transform: translateX(-100%);
-      transition: transform 0.3s;
+      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
       z-index: 99;
     }
     .sidebar.active {
       transform: translateX(0);
     }
-    .sidebar ul li {
-      margin: 15px 0;
-      font-size: 1.2rem;
-      cursor: pointer;
-      padding: 8px;
-      border-radius: 5px;
+    .sidebar h3 {
+      color: var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5em;
+      margin: 20px 0;
+      text-shadow: 0 0 15px var(--neon-red);
+      animation: glitch 0.5s infinite;
     }
-    .sidebar ul li:hover {
-      background: #333;
-      color: #fff;
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      margin: 30px 0;
+      color: #ffcccc;
+      font-size: 1.4em;
+      cursor: pointer;
+      transition: all 0.3s;
+      padding: 15px;
+      border-radius: 10px;
+      background: var(--light-bg);
+      position: relative;
+      overflow: hidden;
+    }
+    .sidebar li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
+      transition: 0.5s;
+    }
+    .sidebar li:hover::before {
+      left: 100%;
+    }
+    .sidebar li:hover {
+      color: var(--neon-red);
+      transform: translateX(20px);
+      background: #3a3a3a;
+      box-shadow: 0 0 15px var(--neon-red);
+    }
+    .sidebar .sold-out {
+      color: #666;
+      cursor: default;
+      background: none;
+      box-shadow: none;
+    }
+    .sidebar .sold-out::before {
+      display: none;
     }
     .main-content {
-      padding: 30px;
+      margin-left: 0;
+      padding: 50px;
       width: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%23ff0000" stroke-width="2" fill="none" opacity="0.15"/><path d="M20 80 L80 20" stroke="%23ff0000" stroke-width="2" opacity="0.1"/></svg>') repeat;
     }
     .user-info {
       position: fixed;
-      top: 10px;
-      left: 60px;
-      color: #ccc;
-      font-size: 1.2rem;
-      background: #222;
-      padding: 8px 15px;
-      border-radius: 5px;
+      top: 20px;
+      left: 100px;
+      color: var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5em;
+      text-shadow: 0 0 15px var(--neon-red);
+      z-index: 100;
+      background: var(--mid-bg);
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px var(--neon-red);
+      animation: glitch 0.7s infinite;
+    }
+    .account-section {
+      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
+      padding: 40px;
+      border-radius: 15px;
+      margin: 50px auto;
+      max-width: 900px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      display: none;
+      animation: slideIn 0.6s ease-out;
+    }
+    .account-section input {
+      padding: 15px;
+      margin: 15px 0;
+      border: 3px solid var(--neon-red);
+      border-radius: 10px;
+      background: var(--light-bg);
+      color: #ffcccc;
+      font-size: 1.3em;
+      width: 100%;
+      max-width: 400px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .account-section input:focus {
+      border-color: var(--dark-red);
+      box-shadow: 0 0 15px var(--neon-red);
+      outline: none;
+    }
+    .account-section button {
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.3em;
+      font-family: 'Orbitron', sans-serif;
+      margin: 15px 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #000;
+    }
+    .account-section button:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--neon-red);
+    }
+    .header {
+      background: linear-gradient(to right, var(--mid-bg), var(--light-bg));
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(255, 0, 0, 0.6);
+      border-radius: 15px;
+      margin-bottom: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 0, 0, 0.2), transparent);
+      animation: rotate 20s linear infinite;
+    }
+    .header > * {
+      position: relative;
+      z-index: 1;
     }
     .header h1 {
-      font-size: 2.5rem;
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4em;
+      color: var(--neon-red);
+      text-shadow: 0 0 20px var(--neon-red);
+      animation: glitch 0.5s infinite;
+    }
+    .header p {
+      font-family: 'Inconsolata', monospace;
+      font-size: 2em;
+      margin: 20px 0;
+      color: var(--dark-red);
+      text-shadow: 0 0 10px var(--dark-red);
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .navbar {
+      background: linear-gradient(to right, var(--mid-bg), var(--light-bg));
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      flex-wrap: wrap;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+      border-radius: 15px;
+      margin: 30px 0;
+      position: relative;
+      z-index: 1;
+    }
+    .navbar button {
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
       color: #fff;
+      border: none;
+      padding: 15px 35px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.3em;
+      font-family: 'Orbitron', sans-serif;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #000;
+    }
+    .navbar button:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--neon-red);
+    }
+    .search-bar {
+      margin: 40px auto;
+      max-width: 800px;
+      position: relative;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 15px 60px 15px 20px;
+      border: 3px solid var(--neon-red);
+      border-radius: 10px;
+      background: var(--mid-bg);
+      color: #ffcccc;
+      font-size: 1.3em;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .search-bar input:focus {
+      border-color: var(--dark-red);
+      box-shadow: 0 0 15px var(--neon-red);
+      outline: none;
+    }
+    .search-bar::after {
+      content: '🔍';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--neon-red);
+      font-size: 1.8em;
+      text-shadow: 0 0 10px var(--neon-red);
+    }
+    .section {
+      margin: 50px 0;
+      animation: slideIn 0.8s ease-out;
+    }
+    .section h2 {
+      color: var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3em;
       text-align: center;
+      text-shadow: 0 0 15px var(--neon-red);
+      margin-bottom: 40px;
+      animation: glitch 0.7s infinite;
     }
     .item-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      padding: 40px;
+      max-height: 1200px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--neon-red) var(--mid-bg);
     }
     .item {
-      background: #222;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #444;
+      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
+      padding: 40px;
+      border-radius: 15px;
+      transition: transform 0.4s, box-shadow 0.4s;
+      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
     .item:hover {
-      border-color: #666;
+      transform: translateY(-15px) rotate(2deg);
+      box-shadow: 0 20px 40px rgba(255, 0, 0, 0.8);
     }
-    .item canvas {
+    .item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 120px;
-      border-radius: 5px;
-      margin-bottom: 15px;
+      height: 100%;
+      background: radial-gradient(circle at top left, rgba(255, 0, 0, 0.3), transparent);
+      z-index: 0;
+      transition: opacity 0.3s;
+    }
+    .item:hover::before {
+      opacity: 0.5;
+    }
+    .item > * {
+      position: relative;
+      z-index: 1;
+    }
+    .item img {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      border-radius: 10px;
+      margin: 0 auto 20px;
+      display: block;
+      transition: transform 0.4s;
+      filter: drop-shadow(0 0 15px var(--neon-red));
+    }
+    .item img:hover {
+      transform: scale(1.25);
+    }
+    .item video {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 10px;
+      margin: 0 auto 20px;
+      display: none;
+      filter: drop-shadow(0 0 15px var(--neon-red));
     }
     .item h3 {
-      color: #fff;
-      font-size: 1.5rem;
+      margin: 15px 0;
+      color: var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2em;
+      text-shadow: 0 0 15px var(--neon-red);
     }
     .item p {
-      font-size: 1rem;
-      color: #ccc;
+      margin: 10px 0;
+      font-size: 1.3em;
+      color: var(--dark-red);
+      font-family: 'Inconsolata', monospace;
+    }
+    .item .sold-out {
+      color: #666;
+      font-weight: bold;
+      font-size: 1.8em;
+      text-align: center;
+      text-shadow: none;
+    }
+    .item .stars {
+      color: var(--gold);
+      font-size: 1.5em;
+      margin: 20px 0;
+      text-align: center;
+      text-shadow: 0 0 10px var(--gold);
+    }
+    .confirmed-badge {
+      display: inline-block;
+      background: linear-gradient(to right, var(--gold), #ccac00);
+      color: #000;
+      padding: 8px 15px;
+      border-radius: 8px;
+      font-size: 1em;
+      margin-left: 15px;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     }
     .item .comment {
       font-style: italic;
-      background: #333;
-      padding: 8px;
-      border-radius: 5px;
-      margin: 10px 0;
+      color: #ffcccc;
+      background: var(--light-bg);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+      font-size: 1.2em;
+      border-left: 5px solid var(--neon-red);
+      transition: transform 0.3s;
+    }
+    .item .comment:hover {
+      transform: translateX(10px);
+    }
+    .item .username {
+      color: var(--neon-red);
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .reviews-btn {
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.2em;
+      font-family: 'Orbitron', sans-serif;
+      margin: 15px auto;
+      display: block;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #000;
+    }
+    .reviews-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--neon-red);
+    }
+    .reviews-container {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background: var(--light-bg);
+      border-radius: 10px;
+      border: 3px solid var(--neon-red);
+    }
+    .comment-input {
+      padding: 15px;
+      margin: 15px 0;
+      border: 3px solid var(--neon-red);
+      border-radius: 10px;
+      background: var(--light-bg);
+      color: #ffcccc;
+      font-size: 1.2em;
+      width: 100%;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .comment-input:focus {
+      border-color: var(--dark-red);
+      box-shadow: 0 0 15px var(--neon-red);
+      outline: none;
+    }
+    .comment-btn {
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.2em;
+      font-family: 'Orbitron', sans-serif;
+      margin: 15px auto;
+      display: block;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #000;
+    }
+    .comment-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--neon-red);
+    }
+    .comment-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .buy-btn {
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.3em;
+      font-family: 'Orbitron', sans-serif;
+      margin: 15px auto;
+      display: block;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #000;
+    }
+    .buy-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--neon-red);
+    }
+    .buy-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .cart-btn {
+      background: linear-gradient(45deg, var(--gold), #ccac00);
+      color: #000;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.3em;
+      font-family: 'Orbitron', sans-serif;
+      margin: 15px auto;
+      display: block;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #fff;
+    }
+    .cart-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--gold);
+    }
+    .job-section {
+      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
+      padding: 40px;
+      border-radius: 15px;
+      margin: 50px auto;
+      max-width: 900px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      animation: slideIn 0.8s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .job-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at bottom right, rgba(255, 0, 0, 0.3), transparent);
+      z-index: 0;
+    }
+    .job-section > * {
+      position: relative;
+      z-index: 1;
+    }
+    .job-section a {
+      color: var(--neon-red);
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8em;
+      transition: color 0.3s, text-shadow 0.3s;
+      text-shadow: 0 0 15px var(--neon-red);
+    }
+    .job-section a:hover {
+      color: var(--dark-red);
+      text-shadow: 0 0 20px var(--dark-red);
     }
     .cart-icon {
       position: fixed;
-      top: 10px;
-      right: 10px;
-      font-size: 2rem;
-      color: #ccc;
+      top: 20px;
+      right: 80px;
+      font-size: 2.5em;
+      color: var(--gold);
       cursor: pointer;
+      z-index: 100;
+      text-shadow: 0 0 15px var(--gold);
+      transition: transform 0.3s, text-shadow 0.3s;
     }
-    .cart-section, .account-section, .checkout-section, .trending-section, .transaction-section {
-      background: #222;
-      padding: 20px;
-      border-radius: 10px;
-      margin: 30px auto;
-      max-width: 700px;
-      border: 1px solid #444;
+    .cart-icon:hover {
+      transform: scale(1.3);
+      text-shadow: 0 0 20px var(--gold);
+    }
+    .cart-section {
+      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
+      padding: 40px;
+      border-radius: 15px;
+      margin: 50px auto;
+      max-width: 900px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
       display: none;
+      animation: slideIn 0.6s ease-out;
     }
-    .cart-item, .transaction-item {
-      background: #333;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
+    .cart-item {
+      background: var(--light-bg);
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 10px;
       display: flex;
       justify-content: space-between;
-      color: #ccc;
+      align-items: center;
+      border-left: 5px solid var(--neon-red);
+      transition: transform 0.3s;
     }
-    .trending-section {
-      display: block;
+    .cart-item:hover {
+      transform: translateX(10px);
+    }
+    .cart-item p {
+      margin: 0;
+      font-size: 1.3em;
+      color: #ffcccc;
+    }
+    .cart-item button {
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-family: 'Orbitron', sans-serif;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .cart-item button:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 15px var(--neon-red);
+    }
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2em;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #000;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--neon-red);
+    }
+    .live-chat {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2em;
+      z-index: 100;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 5px #000;
+    }
+    .live-chat:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px var(--neon-red);
+    }
+    .chat-window {
+      position: fixed;
+      bottom: 140px;
+      right: 20px;
+      width: 350px;
+      max-height: 500px;
+      background: var(--light-bg);
+      border-radius: 15px;
+      border: 3px solid var(--neon-red);
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      z-index: 99;
+    }
+    .chat-header {
+      background: linear-gradient(to right, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 15px;
+      border-radius: 12px 12px 0 0;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3em;
+      text-shadow: 0 0 5px #000;
+    }
+    .chat-body {
+      padding: 20px;
+      max-height: 350px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--neon-red) var(--light-bg);
+    }
+    .chat-message {
+      background: #3a3a3a;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-size: 1.1em;
+      color: #ffcccc;
+    }
+    .chat-message.bot {
+      background: #2a2a2a;
+      border-left: 4px solid var(--neon-red);
+    }
+    .chat-input {
+      display: flex;
+      padding: 15px;
+      background: var(--mid-bg);
+      border-top: 2px solid var(--neon-red);
+      border-radius: 0 0 12px 12px;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid var(--neon-red);
+      border-radius: 8px;
+      background: var(--light-bg);
+      color: #ffcccc;
+      font-size: 1.1em;
+      margin-right: 10px;
+    }
+    .chat-input button {
+      background: linear-gradient(45deg, var(--neon-red), var(--dark-red));
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .chat-input button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px var(--neon-red);
+    }
+    .stats-section {
+      background: linear-gradient(to bottom, var(--mid-bg), var(--light-bg));
+      padding: 40px;
+      border-radius: 15px;
+      margin: 50px auto;
+      max-width: 900px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+      animation: slideIn 0.8s ease-out;
+    }
+    .stats-section h2 {
+      color: var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5em;
+      text-shadow: 0 0 15px var(--neon-red);
+      margin-bottom: 30px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .stat-card {
+      background: var(--light-bg);
+      padding: 20px;
+      border-radius: 10px;
+      border: 3px solid var(--neon-red);
+      transition: transform 0.3s;
+    }
+    .stat-card:hover {
+      transform: scale(1.1);
+    }
+    .stat-card h3 {
+      color: var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5em;
+      margin: 10px 0;
+      text-shadow: 0 0 10px var(--neon-red);
+    }
+    .stat-card p {
+      color: #ffcccc;
+      font-size: 1.2em;
     }
   </style>
 </head>
-<body>
-  <canvas id="bgCanvas"></canvas>
+<body class="dark-theme">
   <div id="captcha-screen">
-    <h2>Darknet Access</h2>
-    <input type="text" id="captcha-input" placeholder="What's 9 + 4?">
+    <h2>Verify Access</h2>
+    <p>What is 9 + 4?</p>
+    <input type="text" id="captcha-input">
     <button onclick="verifyCaptcha()">Submit</button>
   </div>
+
+  <div id="loading-screen">
+    <div class="stick-figure"></div>
+    <p>RakRunnin Loading...</p>
+  </div>
+
   <div class="container">
     <div class="menu-icon" onclick="toggleMenu()">☰</div>
     <div class="cart-icon" onclick="showCart()">🛒</div>
+    <div class="live-chat" onclick="toggleChat()">💬</div>
+    <div class="chat-window" id="chat-window">
+      <div class="chat-header">Live Support - @rakrunnin</div>
+      <div class="chat-body" id="chat-body">
+        <div class="chat-message bot">Yo, fam! Hit me up for help with drops or orders. What's good?</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chat-input" placeholder="Type a message...">
+        <button onclick="sendChatMessage()">Send</button>
+      </div>
+    </div>
     <div class="sidebar" id="sidebar">
-      <ul>
+      <h3>Available Drops</h3>
+      <ul id="sidebar-menu">
         <li onclick="loadPage('cards')">Credit Cards</li>
         <li onclick="loadPage('accounts')">Store Accounts</li>
+        <li onclick="loadPage('malware')">Malware</li>
+        <li onclick="loadPage('fullz')">Fullz</li>
         <li onclick="showAccountSection()">Account</li>
         <li onclick="showCart()">Cart</li>
-        <li onclick="showTransactions()">Transaction Log</li>
+        <li onclick="showStats()">Stats</li>
       </ul>
     </div>
-    <div class="main-content">
+    <div class="main-content" id="main-content">
       <div class="user-info" id="user-info"></div>
       <div class="account-section" id="account-section">
         <h2>Account</h2>
         <input type="text" id="username-input" placeholder="Username">
         <input type="password" id="password-input" placeholder="Password">
-        <button onclick="login()">Login</button>
         <button onclick="createAccount()">Create Account</button>
+        <button onclick="login()">Login</button>
         <button onclick="logout()">Logout</button>
       </div>
       <div class="cart-section" id="cart-section">
         <h2>Your Cart</h2>
         <div id="cart-items"></div>
-        <button onclick="initiateCheckout()">Checkout</button>
+        <button class="buy-btn" onclick="checkout()">Checkout</button>
       </div>
-      <div class="checkout-section" id="checkout-section">
-        <h2>Checkout</h2>
-        <input type="text" class="cashapp-input" id="cashapp-handle" placeholder="Enter Cash App Handle ($username)">
-        <button onclick="completeCheckout()">Confirm Payment</button>
-      </div>
-      <div class="transaction-section" id="transaction-section">
-        <h2>Transaction Log</h2>
-        <div id="transaction-log"></div>
-      </div>
-      <div class="trending-section" id="trending-section">
-        <h2>Trending Drops</h2>
-        <div class="item-container" id="trendingContainer"></div>
+      <div class="stats-section" id="stats-section" style="display: none;">
+        <h2>Shop Stats</h2>
+        <div class="stats-grid" id="stats-grid"></div>
       </div>
       <div class="header">
-        <h1>RakRunnin Darknet Emporium</h1>
+        <h1>RakRunnin Card Shop</h1>
+        <p>Ultimate Darknet Drops - Cards, Accounts, Malware & Fullz - Cash App Only - DM @rakrunnin on Telegram</p>
       </div>
+
+      <div class="navbar">
+        <button onclick="filterItems('all', 'cardContainer', 'cards')">All Cards</button>
+        <button onclick="filterItems('Visa', 'cardContainer', 'cards')">Visa</button>
+        <button onclick="filterItems('MasterCard', 'cardContainer', 'cards')">MasterCard</button>
+        <button onclick="filterItems('Discover', 'cardContainer', 'cards')">Discover</button>
+        <button onclick="filterItems('Amex', 'cardContainer', 'cards')">Amex</button>
+        <button onclick="sortItems('cardContainer')">Sort by Price</button>
+        <button onclick="sortItemsByRating('cardContainer')">Sort by Rating</button>
+        <button onclick="sortItemsByAvailability('cardContainer')">Sort by Availability</button>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" placeholder="Search drops..." oninput="searchItems(this.value)">
+      </div>
+
       <div class="section" id="cards-section">
         <h2>Credit Cards</h2>
         <div class="item-container" id="cardContainer"></div>
       </div>
+
       <div class="section" id="accounts-section" style="display: none;">
-        <h2>Store Accounts</h2>
+        <h2>Store Accounts & Gift Cards</h2>
         <div class="item-container" id="accountContainer"></div>
       </div>
+
+      <div class="section" id="malware-section" style="display: none;">
+        <h2>Malware</h2>
+        <div class="item-container" id="malwareContainer"></div>
+      </div>
+
+      <div class="section" id="fullz-section" style="display: none;">
+        <h2>Fullz</h2>
+        <div class="item-container" id="fullzContainer"></div>
+      </div>
+
+      <div class="job-section">
+        <h2>Stack Cash Fast?</h2>
+        <p>Join @rakrunnin on Telegram for exclusive drops and methods!</p>
+        <a href="https://t.me/rakrunnin">DM @rakrunnin</a>
+      </div>
     </div>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
   </div>
 
   <script>
-    // Data
     const usernames = [
-      'DarkSwipe', 'CashDemon', 'GhostCarder', 'ShadowStackz', 'BlazeMoney',
-      'CryptoKidd', 'SlimeProfit', 'RunninBandz', 'QuickFlipz', 'VoidRunner',
-      'CyberGhostX', 'Stackz4Dayz', 'GlitchBandit', 'DarkHustle', 'NeonReaper',
-      'ShadowFlip', 'CryptoShark', 'BlitzCash', 'PhantomDrop', 'IceBandit'
+      'darkswipe7', 'cashdemonx', 'ghostcarder', 'neonhustler', 'shadowstackz',
+      'blazemoney4', 'cryptokidd', 'slime4profit', 'runninbandz', 'quickflipz'
     ];
-    const comments = [
-      'Visa card hit Saks clean, copped mad drip!',
-      'MasterCard bins are fire, no declines.',
-      'Saks account had $2k balance, too easy.',
-      'Walmart card got me a TV, no cap.',
-      'Amex smashed luxury stores, pure profit.',
-      'Quick cashout with Visa, ATMs eatin’.',
-      'Saks drop was smooth, copped Gucci.',
-      'MasterCard worked for subscriptions, no flags.',
-      'Amex bins hit high-end shops, clean work.',
-      'Walmart gift card copped electronics, flawless.',
-      'Visa was plug-n-play, ran up the bag.',
-      'Saks account got me fresh fits, no hassle.',
-      'MasterCard hittin’ online stores, too good.',
-      'Amex card was elite, copped a Rolex.',
-      'Walmart card had no limits, grabbed gear.',
-      'Visa bins are dummy clean, no blocks.',
-      'Saks drop was straight gas, luxury vibes.',
-      'MasterCard cashout was quick, pure bands.',
-      'Amex hit for big purchases, no issues.',
-      'Walmart card got me free shit, livin’ good.'
+    const commentPool = [
+      'Yo, these cards hit different, copped a Visa and cleaned out Nordstrom 🔥',
+      'Malware’s legit, snagged bank logins in 10 min, no cap 💪',
+      'Fullz got my loan approved, fam, this shit too easy 😎',
+      'Saks account was clutch, got drip for days, 10/10 👌',
+      'Took a sec for @rakrunnin to reply, but the CC worked smooth 💸',
+      'Walmart card hit for a 65" TV, no issues, I’m up now 📺',
+      'Trojan X is fire, remote access was plug-and-play, no bs 🔌',
+      'Nordstrom card got me fresh fits, but use a VPN or you cooked 😭',
+      'Bruh, these Amex bins elite, hit Saks for luxury bags 💼',
+      'Keylogger worked like a charm, got PayPal logins quick 🖥️',
+      'Chase card was sold out, but Visa came through for cashout 💰',
+      'Macy’s account had mad balance, copped home goods easy 🛋️',
+      'Fullz are clean, opened a bank account no questions asked 🏦',
+      'Discover card hit for online shops, low flags, high wins 🎯',
+      'RAT Z got me full control, snatched files like nothin 🕵️‍♂️',
+      'Copped a card for subscriptions, Netflix been free for months 📺',
+      'Saks account needed OTP, but @rakrunnin hooked it up 🙏',
+      'Visa card was fire for ATM cashouts, no flags, pure profit 💵',
+      'Malware setup was dummy easy, snagged credentials in a day 🚀',
+      'Fullz got me a credit line, I’m eatin good now, fam 🍽️'
     ];
     const cardData = [
-      { type: 'Visa', bin: '414720', price: 50, model: 'card', reviews: [] },
-      { type: 'MasterCard', bin: '555555', price: 45, model: 'card', reviews: [] },
-      { type: 'Amex', bin: '378282', price: 60, model: 'card', reviews: [] },
-      { type: 'Discover', bin: '601111', price: 55, model: 'card', reviews: [] },
-      { type: 'Chase', bin: '426684', price: 70, model: 'card', reviews: [] }
+      { type: 'Visa', bin: '414720', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg', use: 'Shop online or cash out at ATMs. Clean bins, high limits.', video: 'https://example.com/visa-demo.mp4', reviews: []},
+      { type: 'MasterCard', bin: '555555', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg', use: 'Perfect for subscriptions or big purchases. Easy cashout.', video: 'https://example.com/mastercard-demo.mp4', reviews: []},
+      { type: 'Discover', bin: '601111', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Discover_Card_logo.svg', use: 'Great for online stores. Low suspicion, high success.', video: 'https://example.com/discover-demo.mp4', reviews: []},
+      { type: 'Amex', bin: '378282', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg', use: 'Luxury purchases or high-value cashouts. Elite bins.', video: 'https://example.com/amex-demo.mp4', reviews: []},
+      { type: 'Chase', bin: '426684', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Chase_Bank_logo.svg', use: 'Premium bank card for cashouts. High success rate.', video: 'https://example.com/chase-demo.mp4', soldOut: true, reviews: []}
     ];
     const accountData = [
-      { type: 'Saks Account', bin: 'SAKS', price: 80, model: 'card', reviews: [] },
-      { type: 'Walmart Gift Card', bin: 'WAL', price: 65, model: 'card', soldOut: true, reviews: [] },
-      { type: 'Target Account', bin: 'TAR', price: 75, model: 'card', reviews: [] },
-      { type: 'Amazon Gift Card', bin: 'AMZ', price: 60, model: 'card', reviews: [] },
-      { type: 'Nordstrom Account', bin: 'NOR', price: 85, model: 'card', reviews: [] }
+      { type: 'Saks Account', bin: 'SAKS', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Saks_Fifth_Avenue_logo.svg', use: 'Buy luxury goods at Saks. Up to $2,000 balance.', video: 'https://example.com/saks-demo.mp4', reviews: []},
+      { type: 'Nordstrom Gift Card', bin: 'NORD', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Nordstrom_Logo.svg', use: 'Shop fashion at Nordstrom. Redeem online or in-store.', video: 'https://example.com/nordstrom-demo.mp4', reviews: []},
+      { type: 'Walmart Gift Card', bin: 'WAL', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Walmart_logo.svg', use: 'Purchase electronics or groceries at Walmart. Easy to use.', video: 'https://example.com/walmart-demo.mp4', reviews: []},
+      { type: 'Macy’s Account', bin: 'MACY', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5b/Macy%27s_Logo.svg', use: 'Shop at Macy’s for clothes and home goods. High balance.', video: 'https://example.com/macys-demo.mp4', soldOut: true, reviews: []}
     ];
-    let cart = [];
-    let transactionLog = JSON.parse(localStorage.getItem('transactionLog')) || [];
+    const malwareData = [
+      { type: 'Stealth Keylogger', bin: 'KEY', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Capture passwords and bank logins silently. Easy setup.', video: 'https://example.com/keylogger-demo.mp4', reviews: []},
+      { type: 'Trojan X', bin: 'TROJ', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Remote access and data theft. Plug-and-play.', video: 'https://example.com/trojan-demo.mp4', soldOut: true, reviews: []},
+      { type: 'RAT Z', bin: 'RATZ', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Steal files and control devices remotely. High success.', video: 'https://example.com/ratz-demo.mp4', reviews: []}
+    ];
+    const fullzData = [
+      { type: 'Fullz - John Doe', bin: 'FULL1', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use open bank accounts or apply for loans. Clean data.', video: 'https://example.com/fullz1-demo.mp4', reviews: []},
+      { type: 'Fullz - Jane Smith', bin: 'FULL2', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Use for credit applications or online purchases. High success.', video: 'https://example.com/fullz2-demo.mp4', reviews: []},
+      { type: 'Fullz - Mike Brown', bin: 'FULL3', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Perfect for high-value applications. Verified data.', video: 'https://example.com/fullz3-demo.mp4', soldOut: true, reviews: []}
+    ];
 
-    // Assign Unique Reviews
-    function assignReviews() {
-      const allItems = [...cardData, ...accountData];
-      let availableComments = [...comments];
-      let availableUsernames = [...usernames];
+    function getUniqueRandomComments(count, usedComments) {
+      const availableComments = commentPool.filter(comment => !usedComments.includes(comment));
+      if (availableComments.length < count) {
+        console.warn('Not enough unique comments available');
+        return availableComments.sort(() => 0.5 - Math.random()).slice(0, count);
+      }
+      return availableComments.sort(() => 0.5 - Math.random()).slice(0, count);
+    }
+
+    function getUniqueRandomUsernames(count, usedUsernames) {
+      const availableUsernames = usernames.filter(username => !usedUsernames.includes(username));
+      if (availableUsernames.length < count) {
+        console.warn('Not enough unique usernames available');
+        return availableUsernames.sort(() => 0.5 - Math.random()).slice(0, count);
+      }
+      return availableUsernames.sort(() => 0.5 - Math.random()).slice(0, count);
+    }
+
+    function populateReviews() {
+      const allItems = [...cardData, ...accountData, ...malwareData, ...fullzData];
+      const usedComments = [];
+      const usedUsernames = [];
       allItems.forEach(item => {
-        const reviewCount = Math.floor(Math.random() * 3) + 2;
-        item.reviews = [];
-        for (let i = 0; i < reviewCount && availableComments.length > 0 && availableUsernames.length > 0; i++) {
-          const commentIndex = Math.floor(Math.random() * availableComments.length);
-          const usernameIndex = Math.floor(Math.random() * availableUsernames.length);
-          item.reviews.push({
-            comment: availableComments[commentIndex],
-            username: availableUsernames[usernameIndex],
-            rating: Math.random() * 2 + 3
-          });
-          availableComments.splice(commentIndex, 1);
-          availableUsernames.splice(usernameIndex, 1);
-        }
+        const reviewCount = Math.floor(Math.random() * 2) + 2; // 2-3 reviews per item
+        const selectedComments = getUniqueRandomComments(reviewCount, usedComments);
+        const selectedUsernames = getUniqueRandomUsernames(reviewCount, usedUsernames);
+        item.reviews = selectedComments.map((comment, index) => ({
+          rating: Math.random() * 2 + 3,
+          comment,
+          username: selectedUsernames[index] || usernames[Math.floor(Math.random() * usernames.length)]
+        }));
+        usedComments.push(...selectedComments);
+        usedUsernames.push(...selectedUsernames);
       });
     }
-    assignReviews();
 
-    // Background Animation
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.position.z = 30;
-    const geometry = new THREE.BoxGeometry(10, 10, 10);
-    const material = new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-    function animateBackground() {
-      requestAnimationFrame(animateBackground);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      renderer.render(scene, camera);
-    }
-    animateBackground();
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    populateReviews();
 
-    // Captcha
-    function verifyCaptcha() {
-      const input = document.getElementById('captcha-input').value.trim();
-      if (input === '13') {
-        gsap.to('#captcha-screen', {
-          opacity: 0,
-          duration: 0.5,
-          onComplete: () => {
-            document.getElementById('captcha-screen').style.display = 'none';
-            const username = localStorage.getItem('currentUser');
-            if (username) {
-              document.getElementById('user-info').textContent = `Logged in as ${username}`;
-              loadPage('cards');
-            } else {
-              showAccountSection();
-            }
-          }
-        });
-      } else {
-        alert('Wrong answer. Try 9 + 4 again.');
+    function toggleMenu() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+      if (sidebar.classList.contains('active')) {
+        document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+        document.getElementById('account-section').style.display = 'none';
+        document.getElementById('cart-section').style.display = 'none';
+        document.getElementById('stats-section').style.display = 'none';
       }
     }
 
-    // Navigation
-    function toggleMenu() {
-      document.getElementById('sidebar').classList.toggle('active');
-    }
-
-    function loadPage(page) {
-      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
-      document.getElementById('account-section').style.display = 'none';
-      document.getElementById('cart-section').style.display = 'none';
-      document.getElementById('transaction-section').style.display = 'none';
-      document.getElementById('checkout-section').style.display = 'none';
-      document.getElementById(`${page}-section`).style.display = 'block';
-      document.getElementById('sidebar').classList.remove('active');
-      if (page === 'cards') loadItems('cardContainer', cardData);
-      if (page === 'accounts') loadItems('accountContainer', accountData);
-      loadTrending();
-    }
-
     function showAccountSection() {
-      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
       document.getElementById('account-section').style.display = 'block';
       document.getElementById('cart-section').style.display = 'none';
-      document.getElementById('transaction-section').style.display = 'none';
-      document.getElementById('checkout-section').style.display = 'none';
+      document.getElementById('stats-section').style.display = 'none';
+      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+      document.getElementById('loading-screen').style.display = 'none';
       document.getElementById('sidebar').classList.remove('active');
     }
 
     function showCart() {
-      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
-      document.getElementById('account-section').style.display = 'none';
       document.getElementById('cart-section').style.display = 'block';
-      document.getElementById('transaction-section').style.display = 'none';
-      document.getElementById('checkout-section').style.display = 'none';
+      document.getElementById('account-section').style.display = 'none';
+      document.getElementById('stats-section').style.display = 'none';
+      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+      document.getElementById('loading-screen').style.display = 'none';
       document.getElementById('sidebar').classList.remove('active');
       displayCart();
     }
 
-    function showTransactions() {
-      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+    function showStats() {
+      document.getElementById('stats-section').style.display = 'block';
       document.getElementById('account-section').style.display = 'none';
       document.getElementById('cart-section').style.display = 'none';
-      document.getElementById('transaction-section').style.display = 'block';
-      document.getElementById('checkout-section').style.display = 'none';
+      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+      document.getElementById('loading-screen').style.display = 'none';
       document.getElementById('sidebar').classList.remove('active');
-      displayTransactions();
+      displayStats();
     }
 
-    // Account Management
     function createAccount() {
       const username = document.getElementById('username-input').value.trim();
       const password = document.getElementById('password-input').value.trim();
       if (username && password) {
-        localStorage.setItem('user_' + username, password);
-        alert('Account created. Login now.');
+        if (!username.match(/^[a-zA-Z0-9_]+$/)) {
+          alert('Username can only contain letters, numbers, and underscores.');
+          return;
+        }
+        const users = JSON.parse(localStorage.getItem('users') || '{}');
+        if (users[username]) {
+          alert('Username already taken, fam.');
+          return;
+        }
+        users[username] = { password, purchased: false, cart: [], purchases: 0 };
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', username);
+        document.getElementById('user-info').textContent = `Logged in as ${username}`;
+        document.getElementById('account-section').style.display = 'none';
+        loadPage('cards');
       } else {
-        alert('Fill in both fields.');
+        alert('Enter a username and password, fam.');
       }
     }
 
     function login() {
       const username = document.getElementById('username-input').value.trim();
       const password = document.getElementById('password-input').value.trim();
-      if (localStorage.getItem('user_' + username) === password) {
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      if (users[username] && users[username].password === password) {
         localStorage.setItem('currentUser', username);
         document.getElementById('user-info').textContent = `Logged in as ${username}`;
-        gsap.to('#account-section', {
-          opacity: 0,
-          duration: 0.5,
-          onComplete: () => {
-            document.getElementById('account-section').style.display = 'none';
-            loadPage('cards');
-          }
-        });
+        document.getElementById('account-section').style.display = 'none';
+        loadPage('cards');
       } else {
-        alert('Wrong username or password.');
+        alert('Wrong username or password, fam.');
       }
     }
 
@@ -453,127 +1158,394 @@
       showAccountSection();
     }
 
-    // Item Rendering
-    function loadItems(containerId, items) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = '';
-      items.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'item';
-        itemElement.innerHTML = `
-          <h3>${item.type} (BIN: ${item.bin})</h3>
-          <p>Price: $$  {item.price}</p>
-          ${item.reviews.length ? `<div class="comment"><span>${item.reviews[0].username}</span>: ${item.reviews[0].comment}</div>` : ''}
-          ${item.soldOut ? '<p>Sold Out</p>' : `<button ${!localStorage.getItem('currentUser') ? 'disabled' : ''} onclick="addToCart('${item.type}', ${item.price})">Add to Cart</button>`}
-        `;
-        const canvas = create3DModel(item);
-        itemElement.prepend(canvas);
-        container.appendChild(itemElement);
-      });
-    }
-
-    function create3DModel(item) {
-      const canvas = document.createElement('canvas');
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, 250 / 120, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-      renderer.setSize(250, 120);
-      camera.position.z = 5;
-      const geometry = new THREE.BoxGeometry(2, 1, 0.1);
-      const material = new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true });
-      const model = new THREE.Mesh(geometry, material);
-      scene.add(model);
-      function animate() {
-        requestAnimationFrame(animate);
-        model.rotation.y += 0.01;
-        renderer.render(scene, camera);
+    function addToCart(item) {
+      const username = localStorage.getItem('currentUser');
+      if (!username) {
+        alert('Log in to add to cart, fam.');
+        showAccountSection();
+        return;
       }
-      animate();
-      return canvas;
-    }
-
-    // Trending Section
-    function loadTrending() {
-      const trendingItems = [...cardData, ...accountData].sort(() => Math.random() - 0.5).slice(0, 3);
-      loadItems('trendingContainer', trendingItems);
-    }
-
-    // Cart
-    function addToCart(type, price) {
-      cart.push({ type, price });
-      alert(`${type} added to cart!`);
-      displayCart();
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      if (!users[username].cart) users[username].cart = [];
+      users[username].cart.push(item);
+      localStorage.setItem('users', JSON.stringify(users));
+      alert(`${item.cardType} added to cart!`);
+      updateStats();
     }
 
     function displayCart() {
+      const username = localStorage.getItem('currentUser');
       const cartItems = document.getElementById('cart-items');
       cartItems.innerHTML = '';
+      if (!username) {
+        cartItems.innerHTML = '<p>Log in to view your cart, fam.</p>';
+        return;
+      }
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      const cart = users[username]?.cart || [];
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p>Cart empty, fam. Stack some drops!</p>';
+        return;
+      }
       cart.forEach((item, index) => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'cart-item';
-        itemElement.innerHTML = `
-          <p>${item.type} -   $${item.price}</p>
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+          <p>${item.cardType} - $${item.price}</p>
           <button onclick="removeFromCart(${index})">Remove</button>
         `;
-        cartItems.appendChild(itemElement);
+        cartItems.appendChild(cartItem);
       });
     }
 
     function removeFromCart(index) {
-      cart.splice(index, 1);
+      const username = localStorage.getItem('currentUser');
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      users[username].cart.splice(index, 1);
+      localStorage.setItem('users', JSON.stringify(users));
       displayCart();
+      updateStats();
     }
 
-    // Checkout
-    function initiateCheckout() {
-      if (!cart.length) {
-        alert('Cart is empty.');
+    function checkout() {
+      const username = localStorage.getItem('currentUser');
+      if (!username) {
+        alert('Log in to checkout, fam.');
+        showAccountSection();
         return;
       }
-      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
-      document.getElementById('account-section').style.display = 'none';
-      document.getElementById('cart-section').style.display = 'none';
-      document.getElementById('transaction-section').style.display = 'none';
-      document.getElementById('checkout-section').style.display = 'block';
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      users[username].purchased = true;
+      users[username].purchases = (users[username].purchases || 0) + users[username].cart.length;
+      users[username].cart = [];
+      localStorage.setItem('users', JSON.stringify(users));
+      updateStats();
+      window.location.href = 'https://t.me/rakrunnin';
     }
 
-    function completeCheckout() {
-      const cashappHandle = document.getElementById('cashapp-handle').value.trim();
-      if (!cashappHandle.startsWith('$') || cashappHandle.length < 2) {
-        alert('Enter a valid Cash App handle starting with $.');
+    function addComment(item, reviewsId) {
+      const commentInput = document.getElementById(`comment-input-${reviewsId}`);
+      const comment = commentInput.value.trim();
+      if (!comment) return;
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      const username = localStorage.getItem('currentUser');
+      if (!username || !users[username].purchased) {
+        alert('Gotta make a confirmed purchase to comment, fam.');
         return;
       }
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      const tx = {
-        id: `TX${Date.now()}`,
-        handle: cashappHandle,
-        items: cart.map(item => item.type),
-        total,
-        date: new Date().toLocaleString()
-      };
-      transactionLog.push(tx);
-      localStorage.setItem('transactionLog', JSON.stringify(transactionLog));
-      alert(`Payment of $${total} sent to ${cashappHandle}. Check @rakrunnin on Telegram for details.`);
-      cart = [];
-      document.getElementById('cashapp-handle').value = '';
-      showTransactions();
+      item.reviews.push({ rating: Math.random() * 2 + 3, comment, username });
+      commentInput.value = '';
+      displayItems('all', getContainerId(item.cardType), item.category);
+      updateStats();
     }
 
-    // Transactions
-    function displayTransactions() {
-      const log = document.getElementById('transaction-log');
-      log.innerHTML = '';
-      transactionLog.forEach(tx => {
-        const txElement = document.createElement('div');
-        txElement.className = 'transaction-item';
-        txElement.textContent = `TX ID: ${tx.id} | Handle: ${tx.handle} | Items: ${tx.items.join(', ')} | Total: $${tx.total} | Date: ${tx.date}`;
-        log.appendChild(txElement);
+    function toggleChat() {
+      const chatWindow = document.getElementById('chat-window');
+      chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function sendChatMessage() {
+      const chatInput = document.getElementById('chat-input');
+      const message = chatInput.value.trim();
+      if (!message) return;
+      const username = localStorage.getItem('currentUser') || 'Guest';
+      const chatBody = document.getElementById('chat-body');
+      const userMessage = document.createElement('div');
+      userMessage.className = 'chat-message';
+      userMessage.textContent = `${username}: ${message}`;
+      chatBody.appendChild(userMessage);
+      chatInput.value = '';
+      chatBody.scrollTop = chatBody.scrollHeight;
+      setTimeout(() => {
+        const botMessage = document.createElement('div');
+        botMessage.className = 'chat-message bot';
+        botMessage.textContent = `Yo ${username}, I'm checkin' your request. Hit up @rakrunnin on Telegram for the real deal or keep it here for quick answers!`;
+        chatBody.appendChild(botMessage);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 1000);
+    }
+
+    function displayStats() {
+      const statsGrid = document.getElementById('stats-grid');
+      statsGrid.innerHTML = '';
+      const username = localStorage.getItem('currentUser');
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      const userPurchases = users[username]?.purchases || 0;
+      const totalItems = [...cardData, ...accountData, ...malwareData, ...fullzData].length;
+      const availableItems = [...cardData, ...accountData, ...malwareData, ...fullzData].filter(item => !item.soldOut).length;
+      const totalReviews = [...cardData, ...accountData, ...malwareData, ...fullzData].reduce((sum, item) => sum + item.reviews.length, 0);
+      const stats = [
+        { title: 'Your Purchases', value: userPurchases },
+        { title: 'Total Drops', value: totalItems },
+        { title: 'Available Drops', value: availableItems },
+        { title: 'Total Reviews', value: totalReviews }
+      ];
+      stats.forEach(stat => {
+        const statCard = document.createElement('div');
+        statCard.className = 'stat-card';
+        statCard.innerHTML = `
+          <h3>${stat.title}</h3>
+          <p>${stat.value}</p>
+        `;
+        statsGrid.appendChild(statCard);
       });
     }
 
-    // Initialize
-    document.getElementById('captcha-screen').style.display = 'flex';
-    loadTrending();
+    function updateStats() {
+      if (document.getElementById('stats-section').style.display === 'block') {
+        displayStats();
+      }
+    }
+
+    function generateItem(category) {
+      const data = category === 'cards' ? cardData : category === 'accounts' ? accountData : category === 'malware' ? malwareData : fullzData;
+      const item = data[Math.floor(Math.random() * data.length)];
+      const cardNumber = item.bin + Array(10).fill(0).map(() => Math.floor(Math.random() * 10)).join('');
+      const expiryMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+      const expiryYear = String(Math.floor(Math.random() * 10) + 24);
+      const cvv = category === 'cards' ? String(Math.floor(Math.random() * 1000)).padStart(3, '0') : '';
+      const price = Math.floor(Math.random() * 76 + 25);
+      const soldOut = item.soldOut || Math.random() < 0.15;
+      const usedComments = [];
+      const usedUsernames = [];
+      const reviewCount = Math.floor(Math.random() * 2) + 2;
+      const selectedComments = getUniqueRandomComments(reviewCount, usedComments);
+      const selectedUsernames = getUniqueRandomUsernames(reviewCount, usedUsernames);
+      const selectedReviews = selectedComments.map((comment, index) => ({
+        rating: Math.random() * 2 + 3,
+        comment,
+        username: selectedUsernames[index] || usernames[Math.floor(Math.random() * usernames.length)]
+      }));
+      usedComments.push(...selectedComments);
+      usedUsernames.push(...selectedUsernames);
+      return {
+        cardNumber: cardNumber.match(/.{1,4}/g)?.join('-') || cardNumber,
+        expiry: category === 'cards' ? `${expiryMonth}/${expiryYear}` : '',
+        cvv,
+        cardType: item.type,
+        logo: item.logo,
+        video: item.video,
+        price,
+        use: item.use,
+        soldOut,
+        reviews: selectedReviews,
+        category
+      };
+    }
+
+    function getContainerId(cardType) {
+      if (cardData.some(c => c.type === cardType)) return 'cardContainer';
+      if (accountData.some(c => c.type === cardType)) return 'accountContainer';
+      if (malwareData.some(c => c.type === cardType)) return 'malwareContainer';
+      return 'fullzContainer';
+    }
+
+    function displayItems(filter = 'all', containerId = 'cardContainer', category = 'cards') {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      const items = Array(1000).fill().map(() => generateItem(category));
+      let filteredItems = items;
+      if (filter !== 'all') {
+        filteredItems = items.filter(item => item.cardType === filter);
+      }
+      filteredItems.slice(0, 50).forEach(item => addItem(item, container));
+      updateSidebar();
+      updateStats();
+    }
+
+    function addItem(item, container) {
+      const reviewsId = `reviews-${item.cardType}-${item.cardNumber.replace(/-/g, '')}`;
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'item';
+      itemDiv.onclick = () => toggleReviews(reviewsId); // Click entire item to toggle reviews
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      const currentUser = localStorage.getItem('currentUser');
+      const canComment = currentUser && users[currentUser]?.purchased;
+      itemDiv.innerHTML = `
+        ${item.soldOut ? '<p class="sold-out">SOLD OUT</p>' : `
+          <img src="${item.logo}" alt="${item.cardType}">
+          <video class="item-video" loop muted>
+            <source src="${item.video}" type="video/mp4">
+          </video>
+        `}
+        <h3>${item.cardType} - $${item.price}</h3>
+        <p>Price: $${item.price}</p>
+        <p>${item.category === 'cards' ? `Card Number: ${item.cardNumber.slice(0, 5)}XXXX-XXXX-XXXX` : `ID: ${item.cardNumber}`}</p>
+        ${item.expiry ? `<p>Expiry: ${item.expiry} | CVV: ***</p>` : ''}
+        <p>${item.use}</p>
+        <p class="stars">${'★'.repeat(Math.floor(item.reviews[0].rating))}${item.reviews[0].rating % 1 ? '☆' : ''} ${item.reviews[0].rating.toFixed(1)}/5</p>
+        <button class="reviews-btn" onclick="event.stopPropagation(); toggleReviews('${reviewsId}')">See Reviews</button>
+        <div class="reviews-container" id="${reviewsId}">
+          ${item.reviews.map(review => `
+            <p class="comment">
+              <span class="username">${review.username}</span>
+              <span class="confirmed-badge">Confirmed Purchase</span>: ${review.comment}
+            </p>
+          `).join('')}
+          ${canComment ? `
+            <input type="text" class="comment-input" id="comment-input-${reviewsId}" placeholder="Drop a comment...">
+            <button class="comment-btn" onclick="event.stopPropagation(); addComment(${JSON.stringify(item)}, '${reviewsId}')">Post Comment</button>
+          ` : ''}
+        </div>
+        <button class="buy-btn" ${item.soldOut ? 'disabled' : ''} onclick="event.stopPropagation(); checkout()">Contact to Purchase</button>
+        ${item.soldOut ? '' : `<button class="cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(item)})">Add to Cart</button>`}
+      `;
+      container.appendChild(itemDiv);
+      if (!item.soldOut) {
+        const video = itemDiv.querySelector('.item-video');
+        itemDiv.addEventListener('mouseenter', () => {
+          video.style.display = 'block';
+          video.play();
+        });
+        itemDiv.addEventListener('mouseleave', () => {
+          video.style.display = 'none';
+          video.pause();
+        });
+      }
+    }
+
+    function toggleReviews(reviewsId) {
+      const reviewsContainer = document.getElementById(reviewsId);
+      reviewsContainer.style.display = reviewsContainer.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function updateSidebar() {
+      const sidebarMenu = document.getElementById('sidebar-menu');
+      sidebarMenu.innerHTML = '';
+      const categories = [
+        { name: 'Credit Cards', id: 'cards', container: 'cardContainer' },
+        { name: 'Store Accounts', id: 'accounts', container: 'accountContainer' },
+        { name: 'Malware', id: 'malware', container: 'malwareContainer' },
+        { name: 'Fullz', id: 'fullz', container: 'fullzContainer' }
+      ];
+      categories.forEach(category => {
+        const types = (category.id === 'cards' ? cardData : category.id === 'accounts' ? accountData : category.id === 'malware' ? malwareData : fullzData)
+          .map(item => item.type);
+        types.forEach(type => {
+          const count = Array.from(document.getElementById(category.container).children)
+            .filter(item => item.querySelector('h3').textContent.includes(type) && !item.querySelector('.sold-out')).length;
+          const li = document.createElement('li');
+          li.textContent = `${type} (${count} available)`;
+          li.className = count === 0 ? 'sold-out' : '';
+          li.onclick = count > 0 ? () => {
+            filterItems(type, category.container, category.id);
+            document.getElementById('sidebar').classList.remove('active');
+          } : null;
+          sidebarMenu.appendChild(li);
+        });
+      });
+      sidebarMenu.innerHTML += '<li onclick="showAccountSection()">Account</li>';
+      sidebarMenu.innerHTML += '<li onclick="showCart()">Cart</li>';
+      sidebarMenu.innerHTML += '<li onclick="showStats()">Stats</li>';
+    }
+
+    function searchItems(query) {
+      const containers = ['cardContainer', 'accountContainer', 'malwareContainer', 'fullzContainer'];
+      containers.forEach(containerId => {
+        const container = document.getElementById(containerId);
+        const items = container.getElementsByClassName('item');
+        Array.from(items).forEach(item => {
+          const title = item.querySelector('h3').textContent.toLowerCase();
+          item.style.display = title.includes(query.toLowerCase()) ? 'block' : 'none';
+        });
+      });
+      updateSidebar();
+      updateStats();
+    }
+
+    function filterItems(type, containerId, category) {
+      displayItems(type, containerId, category);
+    }
+
+    function sortItems(containerId) {
+      const container = document.getElementById(containerId);
+      const items = Array.from(container.children);
+      items.sort((a, b) => {
+        const priceA = parseInt(a.querySelector('p:nth-child(3)').textContent.split('$')[1]);
+        const priceB = parseInt(b.querySelector('p:nth-child(3)').textContent.split('$')[1]);
+        return priceA - priceB;
+      });
+      container.innerHTML = '';
+      items.forEach(item => container.appendChild(item));
+      updateSidebar();
+      updateStats();
+    }
+
+    function sortItemsByRating(containerId) {
+      const container = document.getElementById(containerId);
+      const items = Array.from(container.children);
+      items.sort((a, b) => {
+        const ratingA = parseFloat(a.querySelector('.stars').textContent.split('/')[0].slice(-3));
+        const ratingB = parseFloat(b.querySelector('.stars').textContent.split('/')[0].slice(-3));
+        return ratingB - ratingA;
+      });
+      container.innerHTML = '';
+      items.forEach(item => container.appendChild(item));
+      updateSidebar();
+      updateStats();
+    }
+
+    function sortItemsByAvailability(containerId) {
+      const container = document.getElementById(containerId);
+      const items = Array.from(container.children);
+      items.sort((a, b) => {
+        const soldOutA = a.querySelector('.sold-out') ? 1 : 0;
+        const soldOutB = b.querySelector('.sold-out') ? 1 : 0;
+        return soldOutA - soldOutB;
+      });
+      container.innerHTML = '';
+      items.forEach(item => container.appendChild(item));
+      updateSidebar();
+      updateStats();
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
+      document.body.classList.toggle('neon-theme');
+    }
+
+    function loadPage(sectionId) {
+      document.getElementById('loading-screen').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('cards-section').style.display = sectionId === 'cards' ? 'block' : 'none';
+        document.getElementById('accounts-section').style.display = sectionId === 'accounts' ? 'block' : 'none';
+        document.getElementById('malware-section').style.display = sectionId === 'malware' ? 'block' : 'none';
+        document.getElementById('fullz-section').style.display = sectionId === 'fullz' ? 'block' : 'none';
+        document.getElementById('account-section').style.display = 'none';
+        document.getElementById('cart-section').style.display = 'none';
+        document.getElementById('stats-section').style.display = 'none';
+        if (sectionId === 'cards') displayItems('all', 'cardContainer', 'cards');
+        else if (sectionId === 'accounts') displayItems('all', 'accountContainer', 'accounts');
+        else if (sectionId === 'malware') displayItems('all', 'malwareContainer', 'malware');
+        else if (sectionId === 'fullz') displayItems('all', 'fullzContainer', 'fullz');
+        document.getElementById('loading-screen').style.display = 'none';
+        document.getElementById('sidebar').classList.remove('active');
+      }, 1200);
+    }
+
+    function verifyCaptcha() {
+      const input = document.getElementById('captcha-input').value;
+      if (input === '13') {
+        document.getElementById('captcha-screen').style.display = 'none';
+        const username = localStorage.getItem('currentUser');
+        if (username) {
+          document.getElementById('user-info').textContent = `Logged in as ${username}`;
+          loadPage('cards');
+        } else {
+          showAccountSection();
+        }
+      } else {
+        alert('Wrong answer, fam. Try again.');
+      }
+    }
+
+    window.onload = () => {
+      displayItems('all', 'cardContainer', 'cards');
+      displayItems('all', 'accountContainer', 'accounts');
+      displayItems('all', 'malwareContainer', 'malware');
+      displayItems('all', 'fullzContainer', 'fullz');
+      updateStats();
+    };
   </script>
 </body>
 </html>
