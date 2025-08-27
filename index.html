@@ -531,11 +531,16 @@
       'came in clutch for back to school',
       'idk bout y’all but broski responded for me 10/10',
       'ccs need otp for saks bro pleaseee restock on saks overall it’s decent 😁😁',
-      'hit amazon for sum tech dis card was str8 🔥',
-      'malware got me logins quick af no cap 💯',
-      'fullz worked for a credit line but took a min 😤',
-      'copped some drip from nordstrom card clean tho 👌',
-      'saks acc was fire but need faster dm response bruh 😭'
+      'used da cc on saks it’s decent ima leave another review if they come',
+      'gangggg my cash app locked and I used dis card came in clutch no bs',
+      'foenem be takn ova long to answer but the cc work 😂🔥',
+      'copped some drip wit this, no cap, shit clean af',
+      'hit walmart for a tv, dis card went dummy 💪',
+      'took a min but got my order, worth it tho 🔥',
+      'paypal went smooth, no issues, ima cop again',
+      'dis fullz got me a loan, too easy bruh 💯',
+      'malware hit quick, snagged bank logins no prob',
+      'card was fire but foenem slow to respond 😭'
     ];
     const cardData = [
       { type: 'Visa', bin: '414720', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg', use: 'Shop online or cash out at ATMs. Clean bins, high limits.', reviews: []},
@@ -561,33 +566,43 @@
       { type: 'Fullz - Mike Brown', bin: 'FULL3', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Perfect for high-value applications. Verified data.', soldOut: true, reviews: []}
     ];
 
-    function getUniqueRandomComments(count) {
-      const shuffled = commentPool.sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, count);
+    function getUniqueRandomComments(count, usedComments) {
+      const availableComments = commentPool.filter(comment => !usedComments.includes(comment));
+      if (availableComments.length < count) {
+        console.warn('Not enough unique comments available');
+        return availableComments.sort(() => 0.5 - Math.random()).slice(0, count);
+      }
+      return availableComments.sort(() => 0.5 - Math.random()).slice(0, count);
     }
 
-    function getUniqueRandomUsernames(count) {
-      const shuffled = usernames.sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, count);
+    function getUniqueRandomUsernames(count, usedUsernames) {
+      const availableUsernames = usernames.filter(username => !usedUsernames.includes(username));
+      if (availableUsernames.length < count) {
+        console.warn('Not enough unique usernames available');
+        return availableUsernames.sort(() => 0.5 - Math.random()).slice(0, count);
+      }
+      return availableUsernames.sort(() => 0.5 - Math.random()).slice(0, count);
     }
 
-    function populateReviews(data) {
-      data.forEach(item => {
-        const reviewCount = Math.floor(Math.random() * 2) + 4;
-        const selectedComments = getUniqueRandomComments(reviewCount);
-        const selectedUsernames = getUniqueRandomUsernames(reviewCount);
+    function populateReviews() {
+      const allItems = [...cardData, ...accountData, ...malwareData, ...fullzData];
+      const usedComments = [];
+      const usedUsernames = [];
+      allItems.forEach(item => {
+        const reviewCount = Math.floor(Math.random() * 2) + 2; // 2-3 reviews per item to fit 20 comments
+        const selectedComments = getUniqueRandomComments(reviewCount, usedComments);
+        const selectedUsernames = getUniqueRandomUsernames(reviewCount, usedUsernames);
         item.reviews = selectedComments.map((comment, index) => ({
           rating: Math.random() * 2 + 3,
           comment,
-          username: selectedUsernames[index]
+          username: selectedUsernames[index] || usernames[Math.floor(Math.random() * usernames.length)]
         }));
+        usedComments.push(...selectedComments);
+        usedUsernames.push(...selectedUsernames);
       });
     }
 
-    populateReviews(cardData);
-    populateReviews(accountData);
-    populateReviews(malwareData);
-    populateReviews(fullzData);
+    populateReviews();
 
     function toggleMenu() {
       const sidebar = document.getElementById('sidebar');
@@ -668,17 +683,18 @@
       const cvv = category === 'cards' ? String(Math.floor(Math.random() * 1000)).padStart(3, '0') : '';
       const price = Math.floor(Math.random() * 76 + 25);
       const soldOut = item.soldOut || Math.random() < 0.2;
-      const selectedReviews = [];
-      const reviewCount = Math.floor(Math.random() * 2) + 4;
-      const selectedComments = getUniqueRandomComments(reviewCount);
-      const selectedUsernames = getUniqueRandomUsernames(reviewCount);
-      for (let i = 0; i < reviewCount; i++) {
-        selectedReviews.push({
-          rating: Math.random() * 2 + 3,
-          comment: selectedComments[i],
-          username: selectedUsernames[i]
-        });
-      }
+      const usedComments = [];
+      const usedUsernames = [];
+      const reviewCount = Math.floor(Math.random() * 2) + 2;
+      const selectedComments = getUniqueRandomComments(reviewCount, usedComments);
+      const selectedUsernames = getUniqueRandomUsernames(reviewCount, usedUsernames);
+      const selectedReviews = selectedComments.map((comment, index) => ({
+        rating: Math.random() * 2 + 3,
+        comment,
+        username: selectedUsernames[index] || usernames[Math.floor(Math.random() * usernames.length)]
+      }));
+      usedComments.push(...selectedComments);
+      usedUsernames.push(...selectedUsernames);
       return {
         cardNumber: cardNumber.match(/.{1,4}/g)?.join('-') || cardNumber,
         expiry: category === 'cards' ? `${expiryMonth}/${expiryYear}` : '',
